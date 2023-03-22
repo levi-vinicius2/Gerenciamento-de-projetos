@@ -4,7 +4,7 @@ class Task {
     private DateTime startDate;
     private DateTime finalDate;
     private Boolean overdueTask;
-    private Boolean donaTask;
+    private Boolean doneTask;
     private int taskID = 0;
     private string observation;
 

@@ -4,10 +4,12 @@ class Project{
     private string projectName;
     private List<Task> tasks;
     private int doneTasks = 0;
+    private int projectID = 0;
 
     public Project(User adminUser, string projectName){
         if (adminUser != null){
             this.projectName = projectName;
+            this.projectID++;
             setAdminUser(adminUser);
         } else {
             Console.Write("Erro! Usuário adm não existe");
@@ -20,6 +22,10 @@ class Project{
 
     private void setAdminUser(User user){
         this.adminUser = user;
+    }
+
+    public int getProjectID(){
+        return this.projectID;
     }
 
     public List<User> getAssociatedUsers(){
@@ -53,7 +59,7 @@ class Project{
         return foundedTask;
     }
 
-    private void updateProject(Project project){
+    public void updateProject(Project project){
         setProjectName(project.getProjectName());
     }
 

@@ -4,7 +4,7 @@ class User
     string email;
     string password;
     int userID = 0;
-    List<Project> projects;
+    List<Project> associatedProjects;
 
     public User (){
         this.name = "First user";
@@ -52,5 +52,27 @@ class User
 
     public int getUserID(){
         return this.getUserID();
+    }
+
+    public List<Project> getAllAssociatedProjects(){
+        return this.associatedProjects;
+    }
+
+    public void setAssociatedProject(Project project){
+        this.associatedProjects.Add(project);
+    }
+
+    public Boolean removeAssociatedProject(Project project){
+        Boolean foundedProject = false;
+        int count = 0;
+        foreach(Project project1 in this.associatedProjects){
+            if(project.getProjectID() == project.getProjectID()){
+                foundedProject = true;
+                this.associatedProjects[count].updateProject(project);
+                return foundedProject;
+            }
+            count++;
+        }
+        return foundedProject;
     }
 }
