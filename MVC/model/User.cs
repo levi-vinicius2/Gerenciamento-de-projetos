@@ -3,7 +3,7 @@ class User
     string name;
     string email;
     string password;
-    int userID = 1;
+    int userID = 0;
 
     public User (){
         this.name = "First user";

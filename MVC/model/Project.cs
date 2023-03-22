@@ -5,6 +5,15 @@ class Project{
     private List<Task> tasks;
     private int doneTasks = 0;
 
+    public Project(User adminUser, string projectName){
+        if (adminUser != null){
+            this.projectName = projectName;
+            setAdminUser(adminUser);
+        } else {
+            Console.Write("Erro! Usuário adm não existe");
+        }
+    }
+
     public User GetAdminUser(){
         return this.adminUser;
     }
