@@ -4,7 +4,7 @@ class User
     public string email;
     private string password;
     private int userID = 0;
-    List<Project> associatedProjects;
+    public List<Project> associatedProjects;
 
     public User (){
         this.name = "First user";
@@ -13,24 +13,20 @@ class User
         this.userID = 1;
     }
 
-    public User(string name, string email, string password){
-        this.name = name;
-        this.email = email;
-        this.password = password;
+    public User(User user){
+        this.name = user.getEmail();
+        this.email = user.getName();
+        this.password = user.getPassword();
         this.userID++;
     }
 
-    private void updateUser(User user){
-        setEmail(user.getEmail());
-        setName(user.getName());
-        setPassword(user.getPassword());
-    }
+   
 
-    private void setName(string name){
+    public void setName(string name){
         this.name = name;
     }
 
-    private string getPassword(){
+    public string getPassword(){
         return this.password;
     }
 
@@ -38,7 +34,7 @@ class User
         return this.name;
     }
 
-    private void setEmail(string email){
+    public void setEmail(string email){
         this.email = email;
     }
 
@@ -46,7 +42,7 @@ class User
         return this.email;
     }
 
-    private void setPassword(string password){
+    public void setPassword(string password){
         this.password = password;
     }
 
@@ -54,27 +50,7 @@ class User
         return this.getUserID();
     }
 
-    public List<Project> getAllAssociatedProjects(){
-        return this.associatedProjects;
-    }
 
-    public void setAssociatedProject(Project project){
-        this.associatedProjects.Add(project);
-    }
 
-    public Boolean removeAssociatedProject(Project project){
-        Boolean foundedProject = false;
-        foreach(Project project1 in this.associatedProjects){
-            if(project.getProjectID() == project.getProjectID()){
-                foundedProject = true;
-                try{
-                    this.associatedProjects.Remove(project);
-                } catch (Exception e){
-                    Console.WriteLine($"Erro: {e}");
-                }
-                return foundedProject;
-            }
-        }
-        return foundedProject;
-    }
+    
 }
