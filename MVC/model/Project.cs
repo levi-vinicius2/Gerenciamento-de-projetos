@@ -26,6 +26,37 @@ class Project{
         return this.associatedUsers;
     }
 
+    private Boolean updateAssociatedUsers(User associatedUser){
+        int count = 0;
+        Boolean foundedUser = false;
+        foreach(User user1 in this.associatedUsers){
+            if (associatedUser.getUserID() == this.associatedUsers[count].getUserID()){
+                this.associatedUsers[count] = associatedUser;
+                foundedUser = true;
+                return foundedUser;
+            }
+            count++;
+        }
+        return foundedUser;
+    }
+    private Boolean updateTask(Task task){
+        int count = 0;
+        Boolean foundedTask = false;
+        foreach(Task task1 in this.tasks){
+            if (task.getTaskID() == this.tasks[count].getTaskID()){
+                this.tasks[count] = task;
+                foundedTask = true;
+                return foundedTask;
+            }
+            count++;
+        }
+        return foundedTask;
+    }
+
+    private void updateProject(Project project){
+        setProjectName(project.getProjectName());
+    }
+
     private void setNewAssociatedUser(User user){
         try{
             this.associatedUsers.Add(user);

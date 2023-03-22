@@ -4,12 +4,18 @@ class Task {
     private DateTime startDate;
     private DateTime finalDate;
     private Boolean overdueTask;
+    private Boolean donaTask;
     private int taskID = 0;
     private string observation;
 
     public Task(string taskName){
         this.taskName = taskName;
         this.taskID++;
+    }
+    private void updateTask(Task task){
+        setTaskName(task.getTaskName());
+        setObservation(task.getObservation());
+        setResposableUser(task.getResponsableUser());
     }
     public string getTaskName(){
         return this.taskName;
@@ -37,5 +43,11 @@ class Task {
     }
     public string getObservation(){
         return this.observation;
+    }
+    public User getResponsableUser(){
+        return this.responsableUser;
+    }
+    private void setResposableUser(User user){
+        this.responsableUser = user;
     }
 }

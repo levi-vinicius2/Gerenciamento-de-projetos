@@ -4,6 +4,7 @@ class User
     string email;
     string password;
     int userID = 0;
+    List<Project> projects;
 
     public User (){
         this.name = "First user";
@@ -19,8 +20,18 @@ class User
         this.userID++;
     }
 
+    private void updateUser(User user){
+        setEmail(user.getEmail());
+        setName(user.getName());
+        setPassword(user.getPassword());
+    }
+
     private void setName(string name){
         this.name = name;
+    }
+
+    private string getPassword(){
+        return this.password;
     }
 
     public string getName(){
