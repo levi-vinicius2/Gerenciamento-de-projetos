@@ -1,9 +1,9 @@
 class User
 {
-    string name;
-    string email;
-    string password;
-    int userID = 0;
+    public string name;
+    public string email;
+    private string password;
+    private int userID = 0;
     List<Project> associatedProjects;
 
     public User (){
@@ -64,14 +64,16 @@ class User
 
     public Boolean removeAssociatedProject(Project project){
         Boolean foundedProject = false;
-        int count = 0;
         foreach(Project project1 in this.associatedProjects){
             if(project.getProjectID() == project.getProjectID()){
                 foundedProject = true;
-                this.associatedProjects[count].updateProject(project);
+                try{
+                    this.associatedProjects.Remove(project);
+                } catch (Exception e){
+                    Console.WriteLine($"Erro: {e}");
+                }
                 return foundedProject;
             }
-            count++;
         }
         return foundedProject;
     }

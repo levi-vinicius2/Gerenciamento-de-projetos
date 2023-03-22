@@ -59,7 +59,7 @@ class Project{
         return foundedTask;
     }
 
-    public void updateProject(Project project){
+    private void updateProject(Project project){
         setProjectName(project.getProjectName());
     }
 
