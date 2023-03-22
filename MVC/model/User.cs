@@ -5,14 +5,14 @@ class User
     string password;
     int userID = 1;
 
-    public user (){
+    public User (){
         this.name = "First user";
         this.email= "levi.vinicius@outlook.com";
         this.password = "123456";
         this.userID = 1;
     }
 
-    public user (string name, string email, string password){
+    public User(string name, string email, string password){
         this.name = name;
         this.email = email;
         this.password = password;
@@ -40,6 +40,6 @@ class User
     }
 
     public int getUserID(){
-        return this.getUserID;
+        return this.getUserID();
     }
 }

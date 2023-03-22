@@ -9,7 +9,7 @@ class Project{
         return this.adminUser;
     }
 
-    private User setAdminUser(User user){
+    private void setAdminUser(User user){
         this.adminUser = user;
     }
 
@@ -21,8 +21,8 @@ class Project{
         try{
             this.associatedUsers.Add(user);
             Console.WriteLine("Usuário adicionado com sucesso.");
-        } catch(e){
-            Console.WriteLine($"Erro: {e}");
+        } catch(Exception e){
+            Console.WriteLine($"Erro: {e.Message}");
         }
     }
 
@@ -34,8 +34,8 @@ class Project{
                     Console.WriteLine("Usuário removido");
                     Console.WriteLine($"Nome: {user.getName()}");
                     Console.WriteLine($"Email: {user.getEmail()}");
-                } catch(e){
-                    Console.WriteLine($"Erro ao remover usuário {e}");
+                } catch(Exception e){
+                    Console.WriteLine($"Erro ao remover usuário {e.Message}");
                 }
             } else {
                 Console.WriteLine("Usuário não encontrado");
@@ -48,20 +48,20 @@ class Project{
             this.tasks.Add(task);
             Console.WriteLine("Tarefa adicionada ao projeto.");
             Console.WriteLine($"Nome da tarefa: {task.getTaskName()}");
-        } catch(e){
-            Console.WriteLine($"Erro ao adicionar a tarefa {e}");
+        } catch(Exception e){
+            Console.WriteLine($"Erro ao adicionar a tarefa {e.Message}");
         }
     }
 
     private void removeTask(Task task){
-        foreach(Task task1 in task){
+        foreach(Task task1 in this.tasks){
             if(task1.getTaskID() == task.getTaskID()){
                 try{
                     this.tasks.Remove(task);
                     Console.WriteLine("Tarefa removida");
                     Console.WriteLine($"Nome da tarefa: {task.getTaskName()}");
-                } catch (e){
-                    Console.WriteLine($"Erro ao remover tarefa: {e}");
+                } catch (Exception e){
+                    Console.WriteLine($"Erro ao remover tarefa: {e.Message}");
                 }
             } else {
                 Console.WriteLine("Tarefa não encontrada");
