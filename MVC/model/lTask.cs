@@ -1,5 +1,5 @@
 class Task {
-    private string taskName;
+    public string taskName;
     private User responsableUser;
     private DateTime startDate;
     private DateTime finalDate;
@@ -12,18 +12,18 @@ class Task {
         this.taskName = taskName;
         this.taskID++;
     }
-    private void updateTask(Task task){
-        setTaskName(task.getTaskName());
-        setObservation(task.getObservation());
-        setResposableUser(task.getResponsableUser());
+
+    public Task(){
+        this.taskName = "Nome Tarefa 1";
     }
+  
     public string getTaskName(){
         return this.taskName;
     }
     public string getTaskID(){
         return this.taskName;
     }
-    private void setTaskName(string taskName){
+    public void setTaskName(string taskName){
         this.taskName = taskName;
     }
     private void setFinalDate(DateTime finalDate){
@@ -38,7 +38,7 @@ class Task {
     public DateTime getFinalDate(){
         return this.finalDate;
     }
-    private void setObservation(string observation){
+    public void setObservation(string observation){
         this.observation = observation;
     }
     public string getObservation(){
@@ -47,7 +47,7 @@ class Task {
     public User getResponsableUser(){
         return this.responsableUser;
     }
-    private void setResposableUser(User user){
+    public void setResposableUser(User user){
         this.responsableUser = user;
     }
 }

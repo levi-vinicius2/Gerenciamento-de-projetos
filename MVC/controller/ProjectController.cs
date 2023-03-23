@@ -2,6 +2,13 @@ class projectController : Project
 {
   Project project;
 
+  public projectController(){
+    this.project = new Project();
+  }
+  public projectController(User user, string projectName){
+    this.project = new Project(user, projectName);
+  }
+
   private Boolean updateAssociatedUsers(User associatedUser){
         int count = 0;
         Boolean foundedUser = false;

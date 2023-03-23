@@ -13,10 +13,10 @@ class User
         this.userID = 1;
     }
 
-    public User(User user){
-        this.name = user.getEmail();
-        this.email = user.getName();
-        this.password = user.getPassword();
+    public User(string userName, string userMail, string userPassword){
+        this.name = userName;
+        this.email = userMail;
+        this.password = userPassword;
         this.userID++;
     }
 

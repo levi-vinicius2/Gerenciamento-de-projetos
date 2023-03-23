@@ -3,7 +3,10 @@ class userController : User
     User user;
 
     public userController(User user){
-        this.user = new User(user);
+        this.user = new User(user.getName(), user.getEmail(), user.getPassword());
+    }
+    public userController(){
+        this.user = new User();
     }
     public void updateUser(User user)
     {
