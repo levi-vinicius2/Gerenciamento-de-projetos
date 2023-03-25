@@ -1,14 +1,25 @@
 class projectController : Project
 {
     Project project;
+    List<Project> projectsList;
 
     public projectController(User user)
     {
         this.project = new Project();
+        if (this.projectsList == null){
+            this.projectsList = new List<Project>{project};
+        } else {
+            this.projectsList.Add(project);
+        }
     }
     public projectController(userController user, Project project)
     {
         this.project = new Project(user, project.getProjectName());
+        if (this.projectsList == null){
+            this.projectsList = new List<Project>{project};
+        } else {
+            this.projectsList.Add(project);
+        }
     }
 
     private Boolean updateAssociatedUsers(userController associatedUser)
@@ -35,6 +46,19 @@ class projectController : Project
     private void updateProject(Project project)
     {
         this.project.setProjectName(project.getProjectName());
+    }
+
+    public List<Project> viewAllProjects(){
+        return this.projectsList;
+    }
+
+    public Boolean removeProject(Project project){
+        if (this.projectsList != null && this.projectsList.Contains(project)){
+            this.projectsList.Remove(project);
+            return true;
+        } else {
+            return false;
+        }
     }
 
     private void setNewAssociatedUser(userController user)

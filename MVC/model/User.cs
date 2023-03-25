@@ -4,6 +4,7 @@ class User
     public string email;
     private string password;
     private int userID = 0;
+    private static int nextUserID = 0;
     public List<projectController>? associatedProjects;
 
     public User()
@@ -11,7 +12,7 @@ class User
         this.name = "First user";
         this.email = "levi.vinicius@outlook.com";
         this.password = "123456";
-        this.userID = 1;
+        
     }
 
     public User(string userName, string userMail, string userPassword)
@@ -19,7 +20,7 @@ class User
         this.name = userName;
         this.email = userMail;
         this.password = userPassword;
-        this.userID++;
+        this.userID = nextUserID++;
     }
 
 

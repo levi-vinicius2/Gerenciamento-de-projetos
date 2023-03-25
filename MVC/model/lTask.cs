@@ -1,20 +1,22 @@
 class Task {
     public string taskName;
-    private User responsableUser;
+    private User? responsableUser;
     private DateTime startDate;
     private DateTime finalDate;
     private Boolean overdueTask;
     private Boolean doneTask;
-    private int taskID = 0;
-    private string observation;
+    private int taskID;
+    private int nextTaskID = 0;
+    private string? observation;
 
     public Task(string taskName){
         this.taskName = taskName;
-        this.taskID++;
+        this.taskID = nextTaskID++;
     }
 
     public Task(){
         this.taskName = "Nome Tarefa 1";
+        this.taskID = nextTaskID++;
     }
   
     public string getTaskName(){
@@ -42,10 +44,16 @@ class Task {
         this.observation = observation;
     }
     public string getObservation(){
+        if (this.observation != null)
         return this.observation;
+        else
+        throw new Exception("Não existe nenhuma observação");
     }
     public User getResponsableUser(){
+        if (this.responsableUser != null)
         return this.responsableUser;
+        else
+        throw new Exception("Não existe nenhum usuário responsável");
     }
     public void setResposableUser(User user){
         this.responsableUser = user;

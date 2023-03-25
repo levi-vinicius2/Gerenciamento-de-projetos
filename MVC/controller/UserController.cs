@@ -1,14 +1,25 @@
 class userController : User
 {
     User user;
+    List<User> usersList;
 
     public userController(User user)
     {
         this.user = new User(user.getName(), user.getEmail(), user.getPassword());
+        if (this.usersList == null){
+            this.usersList = new List<User>{user};
+        } else {
+            this.usersList.Add(user);
+        }
     }
     public userController()
     {
         this.user = new User();
+        if (this.usersList == null){
+            this.usersList = new List<User>{user};
+        } else {
+            this.usersList.Add(user);
+        }
     }
     public void updateUser(User user)
     {
@@ -16,9 +27,18 @@ class userController : User
         this.user.setName(user.getName());
         this.user.setPassword(user.getPassword());
     }
-    public User getUser()
+    public List<User> getAllUsers()
     {
-        return this.user;
+        return this.usersList;
+    }
+
+    public Boolean removeUser(User user){
+        if (this.usersList != null && this.usersList.Contains(user)){
+            this.usersList.Remove(user);
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public Boolean removeAssociatedProject(projectController project)
