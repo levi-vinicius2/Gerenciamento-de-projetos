@@ -10,10 +10,10 @@ class Task {
     private string? observation;
     private int projectID;
 
-    public Task(string taskName, Project project){
+    public Task(string taskName, int projectID){
         this.taskName = taskName;
         this.taskID = nextTaskID++;
-        this.projectID = project.getProjectID();
+        this.projectID = projectID;
     }
 
     public Task(){

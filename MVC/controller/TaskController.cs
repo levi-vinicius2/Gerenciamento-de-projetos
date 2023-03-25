@@ -2,9 +2,9 @@ class taskController : Task
 {
     Task task;
     List<Task> taskList;
-    public taskController(string taskName)
+    public taskController(string taskName, int projectID)
     {
-        this.task = new Task(taskName);
+        this.task = new Task(taskName, projectID);
         if (this.taskList == null){
             this.taskList = new List<Task> {task};
         } else {
