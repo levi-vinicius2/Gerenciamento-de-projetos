@@ -6,17 +6,20 @@ class Task {
     private Boolean overdueTask;
     private Boolean doneTask;
     private int taskID;
-    private int nextTaskID = 0;
+    private static int nextTaskID = 0;
     private string? observation;
+    private int projectID;
 
-    public Task(string taskName){
+    public Task(string taskName, Project project){
         this.taskName = taskName;
         this.taskID = nextTaskID++;
+        this.projectID = project.getProjectID();
     }
 
     public Task(){
         this.taskName = "Nome Tarefa 1";
         this.taskID = nextTaskID++;
+        this.projectID = 1000;
     }
   
     public string getTaskName(){
