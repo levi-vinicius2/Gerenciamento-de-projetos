@@ -2,10 +2,12 @@ class userController : User
 {
     User user;
 
-    public userController(User user){
+    public userController(User user)
+    {
         this.user = new User(user.getName(), user.getEmail(), user.getPassword());
     }
-    public userController(){
+    public userController()
+    {
         this.user = new User();
     }
     public void updateUser(User user)
@@ -14,51 +16,84 @@ class userController : User
         this.user.setName(user.getName());
         this.user.setPassword(user.getPassword());
     }
-    public User getUser(){
+    public User getUser()
+    {
         return this.user;
     }
 
-    public Boolean removeAssociatedProject(Project project)
+    public Boolean removeAssociatedProject(projectController project)
     {
         Boolean foundedProject = false;
-        foreach (Project project1 in this.associatedProjects)
+        if (this.associatedProjects != null)
         {
-            if (project.getProjectID() == project.getProjectID())
+            foreach (Project project1 in this.associatedProjects)
             {
-                foundedProject = true;
-                try
+                if (project.getProjectID() == project.getProjectID())
                 {
-                    this.associatedProjects.Remove(project);
+                    foundedProject = true;
+                    try
+                    {
+                        this.associatedProjects.Remove(project);
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine($"Erro: {e}");
+                    }
+                    return foundedProject;
                 }
-                catch (Exception e)
-                {
-                    Console.WriteLine($"Erro: {e}");
-                }
-                return foundedProject;
             }
         }
         return foundedProject;
     }
 
-    public List<Project> getAllAssociatedProjects()
+    public List<projectController> getAllAssociatedProjects()
     {
-        return this.associatedProjects;
+        if (this.associatedProjects != null)
+        {
+            return this.associatedProjects;
+        }
+        else
+        {
+            throw new ArgumentNullException("Nao existem projetos associados");
+        }
     }
 
-    public void setAssociatedProject(Project project)
+    public void setAssociatedProject(projectController project)
     {
-        this.associatedProjects.Add(project);
+        if (this.associatedProjects != null)
+        {
+            try
+            {
+                this.associatedProjects.Add(project);
+            }
+            catch (Exception e)
+            {
+                throw new Exception("Erro" + e);
+            }
+        }
+        else
+        {
+            userController auxUser = new userController(this.user);
+            this.associatedProjects = new List<projectController> { project };
+        }
     }
 
-    public Boolean updateAssociatedProject(Project project){
+
+    public Boolean updateAssociatedProject(projectController project)
+    {
         int count = 0;
         Boolean foundedProject = false;
-        foreach(Project project1 in associatedProjects){
-            if (project.getProjectID() == this.associatedProjects[count].getProjectID()){
-                foundedProject = true;
-                this.associatedProjects[count] = project;
-                count ++;
-                return foundedProject;
+        if (this.associatedProjects != null)
+        {
+            foreach (projectController project1 in associatedProjects)
+            {
+                if (project.getProjectID() == this.associatedProjects[count].getProjectID())
+                {
+                    foundedProject = true;
+                    this.associatedProjects[count] = project;
+                    count++;
+                    return foundedProject;
+                }
             }
         }
         return foundedProject;
