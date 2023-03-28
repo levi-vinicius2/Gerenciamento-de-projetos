@@ -7,7 +7,7 @@ namespace WebApplication1.Controllers
 {
     [ApiController]
     [Route("[taskController]")]
-    class TaskController : ModelTask.Models.Task
+    class TaskController : Controller
     {
         ModelTask.Models.Task task;
         List<ModelTask.Models.Task> taskList;
@@ -58,9 +58,7 @@ namespace WebApplication1.Controllers
             {
                 if (taskID == task1.getTaskID())
                 {
-                    setTaskName(task.getTaskName());
-                    setObservation(task.getObservation());
-                    setResposableUser(task.getResponsableUser());
+                    this.task = task1;
                 }
             }
         }

@@ -10,7 +10,7 @@ namespace UserController.Controllers
     {
         private User user;
         List<User> usersList;
-        private List<Project>? associatedProjects;
+        private List<int>? associatedProjectsID;
 
         public UserController(User user)
         {
@@ -81,87 +81,6 @@ namespace UserController.Controllers
                 }
             }
             return false;
-        }
-
-        [HttpDelete("{projectID}")]
-        public Boolean removeAssociatedProject(int projectID)
-        {
-            Boolean foundedProject = false;
-            if (this.associatedProjects != null)
-            {
-                foreach (Project project1 in this.associatedProjects)
-                {
-                    if (project1.getProjectID() == projectID)
-                    {
-                        try
-                        {
-                            this.associatedProjects.Remove(project1);
-                            foundedProject = true;
-                        }
-                        catch (Exception e)
-                        {
-                            Console.WriteLine($"Erro: {e}");
-                        }
-                        return foundedProject;
-                    }
-                }
-            }
-            return foundedProject;
-        }
-
-        [HttpGet]
-        public List<Project> getAllAssociatedProjects()
-        {
-            if (this.associatedProjects != null)
-            {
-                return this.associatedProjects;
-            }
-            else
-            {
-                throw new ArgumentNullException("Nao existem projetos associados");
-            }
-        }
-
-        [HttpPost]
-        public void setAssociatedProject(Project project)
-        {
-            if (this.associatedProjects != null)
-            {
-                try
-                {
-                    this.associatedProjects.Add(project);
-                }
-                catch (Exception e)
-                {
-                    throw new Exception("Erro" + e);
-                }
-            }
-            else
-            {
-                User auxUser = new User(this.user.getName(), this.user.getEmail(), this.user.getPassword());
-                this.associatedProjects = new List<Project> { project };
-            }
-        }
-
-        [HttpPut("{projectID}")]
-        public Boolean updateAssociatedProject(int projectID)
-        {
-            int count = 0;
-            Boolean foundedProject = false;
-            if (this.associatedProjects != null)
-            {
-                foreach (Project project1 in associatedProjects)
-                {
-                    if (project1.getProjectID() == projectID)
-                    {
-                        foundedProject = true;
-                        this.associatedProjects[count] = project1;
-                        return foundedProject;
-                    }
-                    count++;
-                }
-            }
-            return foundedProject;
         }
     }
 }
