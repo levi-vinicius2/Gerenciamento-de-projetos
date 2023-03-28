@@ -11,6 +11,7 @@ namespace WebApplication1.Controllers
     {
         ModelTask.Models.Task task;
         List<ModelTask.Models.Task> taskList;
+
         public TaskController(string taskName, int projectID)
         {
             this.task = new ModelTask.Models.Task(taskName, projectID);
@@ -24,23 +25,47 @@ namespace WebApplication1.Controllers
             }
         }
 
-        public void removeTask(ModelTask.Models.Task task)
+        [HttpRemove("{taskID}")]
+        public void removeTask(int taskID)
         {
             if (this.taskList != null && this.taskList.Contains(task))
             {
-                taskList.Remove(task);
+                foreach(ModelTask.Models.Task task1 in this.taskList)
+                {
+                    if (taskID = task1.getTaskID()
+                    {
+                        try
+                        {
+                            this.taskList.Remove(task1);
+                        }
+                        catch
+                        {
+                            throw new Exception(e)
+                        }
+                    }
+                }
             }
             else
             {
                 throw new Exception("Erro: tarefa não encontrada");
             }
         }
-        public void updateTask(ModelTask.Models.Task task)
+
+        [HttpPut("{taskID}")]
+        public void updateTask(int taskID)
         {
-            setTaskName(task.getTaskName());
-            setObservation(task.getObservation());
-            setResposableUser(task.getResponsableUser());
+            foreach (ModelTask.Models.task task1 in this.taskList)
+            {
+                if (taskID = task1.getTaskID())
+                {
+                    setTaskName(task.getTaskName());
+                    setObservation(task.getObservation());
+                    setResposableUser(task.getResponsableUser());
+                }
+            }
         }
+
+        [HttpGet]
         public List<ModelTask.Models.Task> viewTask()
         {
             return this.taskList;

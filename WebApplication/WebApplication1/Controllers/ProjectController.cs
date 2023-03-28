@@ -25,6 +25,7 @@ namespace WebApplication1.Controllers
                 this.projectsList.Add(project);
             }
         }
+
         public ProjectController(User user, Project project)
         {
             this.project = new Project(user, project.getProjectName());
@@ -38,7 +39,8 @@ namespace WebApplication1.Controllers
             }
         }
 
-        private Boolean updateAssociatedUsers(User associatedUser)
+        [HttpPut("{UserID}")]
+        private Boolean updateAssociatedUsers(int userID)
         {
             int count = 0;
             Boolean foundedUser = false;
@@ -46,9 +48,9 @@ namespace WebApplication1.Controllers
             {
                 foreach (User user1 in this.associatedUsers)
                 {
-                    if (associatedUser.getUserID() == this.associatedUsers[count].getUserID())
+                    if (userID == this.associatedUsers[count].getUserID())
                     {
-                        this.associatedUsers[count] = associatedUser;
+                        this.associatedUsers[count] = user1;
                         foundedUser = true;
                         return foundedUser;
                     }
@@ -58,23 +60,53 @@ namespace WebApplication1.Controllers
             return foundedUser;
         }
 
-
-        private void updateProject(Project project)
+        [HttPut("{projectID}")]
+        private void updateProject(int projectID)
         {
-            this.project.setProjectName(project.getProjectName());
+            int count = 0;
+            Boolean foundedProject = false;
+            if (this.projectsList != null)
+            {
+                foreach (Project projectsList1 in this.projectsList)
+                {
+                    if (projectID == this.associatedUsers[count].getUserID())
+                    {
+                        this.associatedUsers[count] = projectsList1;
+                        foundedProject = true;
+                        return foundedProject;
+                    }
+                    count++;
+                }
+            }
+            return foundedProject;
         }
 
+        [HttpGet]
         public List<Project> viewAllProjects()
         {
             return this.projectsList;
         }
 
-        public Boolean removeProject(Project project)
+        [HttpDelete("{projectID}")]
+        public Boolean removeProject(int projectID)
         {
             if (this.projectsList != null && this.projectsList.Contains(project))
             {
-                this.projectsList.Remove(project);
-                return true;
+                foreach(Project project in this.projectsList)
+                {
+                    if(project.getProjectID() == projectID)
+                    {
+                        try
+                        {
+                            this.projectsList.Remove(project);
+                        } catch(Exception e)
+                        {
+                            throw new Exception(e);
+                        }
+                        return true;
+                    }
+                }
+                
             }
             else
             {
@@ -82,6 +114,7 @@ namespace WebApplication1.Controllers
             }
         }
 
+        [HttpPost]
         private void setNewAssociatedUser(User user)
         {
             if (this.associatedUsers != null)
@@ -102,13 +135,14 @@ namespace WebApplication1.Controllers
             }
         }
 
-        private void removeAssociatedUser(User user)
+        [HttpRemove("{userID}")]
+        private void removeAssociatedUser(int userID)
         {
             if (this.associatedUsers != null)
             {
                 foreach (User user1 in this.associatedUsers)
                 {
-                    if (user1.getUserID() == user.getUserID())
+                    if (user1.getUserID() == userID)
                     {
                         try
                         {
@@ -122,10 +156,6 @@ namespace WebApplication1.Controllers
                             Console.WriteLine($"Erro ao remover usuário {e.Message}");
                         }
                     }
-                    else
-                    {
-                        Console.WriteLine("Usuário não encontrado");
-                    }
                 }
             }
             else
@@ -134,6 +164,7 @@ namespace WebApplication1.Controllers
             }
         }
 
+        [HttpGet]
         private List<User> getAllAssociatedUsers()
         {
             if (this.associatedUsers != null)
@@ -146,6 +177,7 @@ namespace WebApplication1.Controllers
             }
         }
 
+        [HttpPost]
         private void setNewTask(ModelTask.Models.Task task)
         {
             if (this.tasks != null)
@@ -167,13 +199,14 @@ namespace WebApplication1.Controllers
             }
         }
 
-        private void removeTask(ModelTask.Models.Task task)
+        [HttpRemove("{taskID}")]
+        private void removeTask(int taskID)
         {
             if (this.tasks != null)
             {
                 foreach (ModelTask.Models.Task task1 in this.tasks)
                 {
-                    if (task1.getTaskID() == task.getTaskID())
+                    if (task1.getTaskID() == taskID)
                     {
                         try
                         {
@@ -198,6 +231,7 @@ namespace WebApplication1.Controllers
             }
         }
 
+        [HttpsGet]
         public List<ModelTask.Models.Task> getAllTasks()
         {
             if (this.tasks != null)
@@ -210,7 +244,8 @@ namespace WebApplication1.Controllers
             }
         }
 
-        private Boolean updateTask(ModelTask.Models.Task task)
+        [HttpPut("{taskID}")]
+        private Boolean updateTask(int taskID)
         {
             int count = 0;
             Boolean foundedTask = false;
@@ -218,9 +253,9 @@ namespace WebApplication1.Controllers
             {
                 foreach (ModelTask.Models.Task task1 in this.tasks)
                 {
-                    if (task.getTaskID() == this.tasks[count].getTaskID())
+                    if (taskID == this.tasks[count].getTaskID())
                     {
-                        this.tasks[count] = task;
+                        this.tasks[count] = task1;
                         foundedTask = true;
                         return foundedTask;
                     }

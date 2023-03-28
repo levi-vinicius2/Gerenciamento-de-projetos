@@ -5,7 +5,7 @@ using ModelProject.Models;
 namespace UserController.Controllers
 {
     [ApiController]
-    [Route("[userController]")]
+    [Route("{userController}")]
     class UserController : Controller
     {
         private User user;
@@ -36,6 +36,7 @@ namespace UserController.Controllers
                 this.usersList.Add(user);
             }
         }
+
         [HttpGet]
         public List<User> GetAllUsers()
         {
@@ -50,30 +51,35 @@ namespace UserController.Controllers
 
         }
 
-        public void updateUser(User user)
+        [HttpPut("{userID}")]
+        public void updateUser(int userID)
         {
-            this.user.setEmail(user.getEmail());
-            this.user.setName(user.getName());
-            this.user.setPassword(user.getPassword());
-        }
-        public List<User> getAllUsers()
-        {
-            if (this.usersList != null)
+            int count = 0;
+            foreach (User user1 int this.usersList)
             {
-                return this.usersList;
-            }
-            else
-            {
-                throw new Exception("Erro: Não existem usuários");
+                if (user1.getUserID() == userID) { 
+                    user1.setUserID(userID);
+                    user1.setUserName(user1.getUserName());
+                    user1.setPassword(user1.getPassword());
+                    usersList[count] = user1;
+                }
+                count++;
             }
         }
 
-        public Boolean removeUser(User user)
+        [HttpRemove("{userID}")]
+        public Boolean removeUser(int userID)
         {
-            if (this.usersList != null && this.usersList.Contains(user))
+            if (this.usersList != null)
             {
-                this.usersList.Remove(user);
-                return true;
+                foreach(User user1 in usersList)
+                {
+                    if (user1.getUserID() == userID)
+                    {
+                        this.usersList.Remove(user);
+                        return true;
+                    }
+                }
             }
             else
             {
@@ -81,19 +87,20 @@ namespace UserController.Controllers
             }
         }
 
-        public Boolean removeAssociatedProject(Project project)
+        [HttpRemove("{projectID}")]
+        public Boolean removeAssociatedProject(int projectID)
         {
             Boolean foundedProject = false;
             if (this.associatedProjects != null)
             {
                 foreach (Project project1 in this.associatedProjects)
                 {
-                    if (project.getProjectID() == project.getProjectID())
+                    if (project1.getProjectID() == projectID)
                     {
-                        foundedProject = true;
                         try
                         {
                             this.associatedProjects.Remove(project);
+                            foundedProject = true;
                         }
                         catch (Exception e)
                         {
@@ -106,6 +113,7 @@ namespace UserController.Controllers
             return foundedProject;
         }
 
+        [HttpGet]
         public List<Project> getAllAssociatedProjects()
         {
             if (this.associatedProjects != null)
@@ -118,6 +126,7 @@ namespace UserController.Controllers
             }
         }
 
+        [HttpPost]
         public void setAssociatedProject(Project project)
         {
             if (this.associatedProjects != null)
@@ -138,8 +147,8 @@ namespace UserController.Controllers
             }
         }
 
-
-        public Boolean updateAssociatedProject(Project project)
+        [HttpPut("{projectID}")]
+        public Boolean updateAssociatedProject(int projectID)
         {
             int count = 0;
             Boolean foundedProject = false;
@@ -147,13 +156,13 @@ namespace UserController.Controllers
             {
                 foreach (Project project1 in associatedProjects)
                 {
-                    if (project.getProjectID() == this.associatedProjects[count].getProjectID())
+                    if (project1.getProjectID() == projectID)
                     {
                         foundedProject = true;
-                        this.associatedProjects[count] = project;
-                        count++;
+                        this.associatedProjects[count] = project1;
                         return foundedProject;
                     }
+                    count++;
                 }
             }
             return foundedProject;
