@@ -1,12 +1,13 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using ModelProject.Models;
 using ModelTask.Models;
 
 namespace ModelUser.Models
 {
 
-    class User
+    public class User
     {
         public string name;
         public string email;

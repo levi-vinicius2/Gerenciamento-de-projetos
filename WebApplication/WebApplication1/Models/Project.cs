@@ -2,10 +2,11 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ModelUser.Models;
 using ModelTask.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace ModelProject.Models
 {
-    class Project
+    public class Project : DbContext
     {
         private User adminUser;
         public List<User>? associatedUsers;
@@ -25,7 +26,7 @@ namespace ModelProject.Models
             }
             else
             {
-                throw new ArgumentNullException(nameof(adminUser), "O usuário administrador não pode ser nulo.");
+                throw new ArgumentNullException(nameof(adminUser), "O usuï¿½rio administrador nï¿½o pode ser nulo.");
             }
         }
 
@@ -54,7 +55,7 @@ namespace ModelProject.Models
         {
             if (this.associatedUsers == null)
             {
-                throw new ArgumentNullException("Não existem usuários associados a esta tarefa!");
+                throw new ArgumentNullException("Nï¿½o existem usuï¿½rios associados a esta tarefa!");
             }
             return this.associatedUsers;
         }

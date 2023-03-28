@@ -1,10 +1,12 @@
-using Microsoft.EntityFrameworCore.SqlServer;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.SqlServer;
+using projectManeger.Data;
 
 namespace projectManager
 {
     public class Program
     {
-        public class static void Main(string[] args)
+        public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
 
@@ -16,10 +18,11 @@ namespace projectManager
             builder.Services.AddSwaggerGen();
 
             builder.Services.AddEntityFrameworkSqlServer()
-                .AddDbContext<UserController>(
-                    options => options.UserSqlServer(builder.Configuration.GetConnectionString("DataBase"))
-                ); ;
+                .AddDbContext<ProjectManeger>(
+                    options => options.UseSqlServer(builder.Configuration.GetConnectionString("DataBase"))
+                );
                 
+           // builder.Services.AddScoped<>
 
             var app = builder.Build();
 

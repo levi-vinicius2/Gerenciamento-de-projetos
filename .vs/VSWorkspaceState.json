@@ -5,8 +5,8 @@
     "\\WebApplication",
     "\\WebApplication\\WebApplication1",
     "\\WebApplication\\WebApplication1\\Controllers",
-    "\\WebApplication\\WebApplication1\\Models"
+    "\\WebApplication\\WebApplication1\\Models",
+    "\\WebApplication\\WebApplication1\\ProgramDBContext"
   ],
-  "SelectedNode": "\\WebApplication\\WebApplication1\\WebApplication1.csproj",
   "PreviewInSolutionExplorer": false
 }

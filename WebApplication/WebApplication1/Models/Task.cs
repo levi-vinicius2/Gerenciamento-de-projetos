@@ -1,11 +1,12 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using ModelUser.Models;
 using ModelProject.Models;
 
 namespace ModelTask.Models
 {
-    class Task
+    public class Task
     {
         public string taskName;
         private User? responsableUser;
