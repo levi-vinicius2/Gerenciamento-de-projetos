@@ -1,0 +1,15 @@
+{
+  "version": "0.2.1",
+  "tasks": [
+    {
+      "taskLabel": "tarefa-WebApplication1",
+      "appliesTo": "WebApplication/WebApplication1/",
+      "type": "launch"
+    },
+    {
+      "taskLabel": "tarefa-Gerenciamento-de-projetos",
+      "appliesTo": "/",
+      "type": "launch"
+    }
+  ]
+}

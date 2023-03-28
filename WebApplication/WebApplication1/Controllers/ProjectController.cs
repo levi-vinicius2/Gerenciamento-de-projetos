@@ -60,8 +60,8 @@ namespace WebApplication1.Controllers
             return foundedUser;
         }
 
-        [HttPut("{projectID}")]
-        private void updateProject(int projectID)
+        [HttpPut("{projectID}")]
+        private Boolean updateProject(int projectID)
         {
             int count = 0;
             Boolean foundedProject = false;
@@ -69,9 +69,9 @@ namespace WebApplication1.Controllers
             {
                 foreach (Project projectsList1 in this.projectsList)
                 {
-                    if (projectID == this.associatedUsers[count].getUserID())
+                    if (projectID == this.projectsList[count].getProjectID())
                     {
-                        this.associatedUsers[count] = projectsList1;
+                        this.projectsList[count] = projectsList1;
                         foundedProject = true;
                         return foundedProject;
                     }
@@ -101,17 +101,14 @@ namespace WebApplication1.Controllers
                             this.projectsList.Remove(project);
                         } catch(Exception e)
                         {
-                            throw new Exception(e);
+                            throw new Exception("Erro: "+e);
                         }
                         return true;
                     }
                 }
                 
             }
-            else
-            {
-                return false;
-            }
+            return false;
         }
 
         [HttpPost]
@@ -122,7 +119,7 @@ namespace WebApplication1.Controllers
                 try
                 {
                     this.associatedUsers.Add(user);
-                    Console.WriteLine("Usuário adicionado com sucesso.");
+                    Console.WriteLine("Usuï¿½rio adicionado com sucesso.");
                 }
                 catch (Exception e)
                 {
@@ -135,7 +132,7 @@ namespace WebApplication1.Controllers
             }
         }
 
-        [HttpRemove("{userID}")]
+        [HttpDelete("{userID}")]
         private void removeAssociatedUser(int userID)
         {
             if (this.associatedUsers != null)
@@ -146,21 +143,21 @@ namespace WebApplication1.Controllers
                     {
                         try
                         {
-                            this.associatedUsers.Remove(user);
-                            Console.WriteLine("Usuário removido");
-                            Console.WriteLine($"Nome: {user.getName()}");
-                            Console.WriteLine($"Email: {user.getEmail()}");
+                            this.associatedUsers.Remove(user1);
+                            Console.WriteLine("Usuï¿½rio removido");
+                            Console.WriteLine($"Nome: {user1.getName()}");
+                            Console.WriteLine($"Email: {user1.getEmail()}");
                         }
                         catch (Exception e)
                         {
-                            Console.WriteLine($"Erro ao remover usuário {e.Message}");
+                            Console.WriteLine($"Erro ao remover usuï¿½rio {e.Message}");
                         }
                     }
                 }
             }
             else
             {
-                throw new Exception("Não existem usuários para serem removidos");
+                throw new Exception("Nï¿½o existem usuï¿½rios para serem removidos");
             }
         }
 
@@ -173,7 +170,7 @@ namespace WebApplication1.Controllers
             }
             else
             {
-                throw new Exception("Não existem usuários associados a esta tarefa");
+                throw new Exception("Nï¿½o existem usuï¿½rios associados a esta tarefa");
             }
         }
 
@@ -199,7 +196,7 @@ namespace WebApplication1.Controllers
             }
         }
 
-        [HttpRemove("{taskID}")]
+        [HttpDelete("{taskID}")]
         private void removeTask(int taskID)
         {
             if (this.tasks != null)
@@ -210,9 +207,9 @@ namespace WebApplication1.Controllers
                     {
                         try
                         {
-                            this.tasks.Remove(task);
+                            this.tasks.Remove(task1);
                             Console.WriteLine("Tarefa removida");
-                            Console.WriteLine($"Nome da tarefa: {task.getTaskName()}");
+                            Console.WriteLine($"Nome da tarefa: {task1.getTaskName()}");
                         }
                         catch (Exception e)
                         {
@@ -221,17 +218,17 @@ namespace WebApplication1.Controllers
                     }
                     else
                     {
-                        Console.WriteLine("Tarefa não encontrada");
+                        Console.WriteLine("Tarefa nï¿½o encontrada");
                     }
                 }
             }
             else
             {
-                throw new Exception("Erro: Não existem tarefas para ser removidas");
+                throw new Exception("Erro: Nï¿½o existem tarefas para ser removidas");
             }
         }
 
-        [HttpsGet]
+        [HttpGet]
         public List<ModelTask.Models.Task> getAllTasks()
         {
             if (this.tasks != null)
@@ -240,7 +237,7 @@ namespace WebApplication1.Controllers
             }
             else
             {
-                throw new Exception("Não existem tarefas para ser apresentadas");
+                throw new Exception("Nï¿½o existem tarefas para ser apresentadas");
             }
         }
 

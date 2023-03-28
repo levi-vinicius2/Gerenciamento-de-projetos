@@ -25,38 +25,38 @@ namespace WebApplication1.Controllers
             }
         }
 
-        [HttpRemove("{taskID}")]
+        [HttpDelete("{taskID}")]
         public void removeTask(int taskID)
         {
-            if (this.taskList != null && this.taskList.Contains(task))
+            if (this.taskList != null)
             {
                 foreach(ModelTask.Models.Task task1 in this.taskList)
                 {
-                    if (taskID = task1.getTaskID()
+                    if (taskID == task1.getTaskID())
                     {
                         try
                         {
                             this.taskList.Remove(task1);
                         }
-                        catch
+                        catch (Exception e)
                         {
-                            throw new Exception(e)
+                            throw new Exception(e+"Erro");
                         }
                     }
                 }
             }
             else
             {
-                throw new Exception("Erro: tarefa não encontrada");
+                throw new Exception("Erro: tarefa nï¿½o encontrada");
             }
         }
 
         [HttpPut("{taskID}")]
         public void updateTask(int taskID)
         {
-            foreach (ModelTask.Models.task task1 in this.taskList)
+            foreach (ModelTask.Models.Task task1 in this.taskList)
             {
-                if (taskID = task1.getTaskID())
+                if (taskID == task1.getTaskID())
                 {
                     setTaskName(task.getTaskName());
                     setObservation(task.getObservation());

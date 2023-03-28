@@ -36,9 +36,9 @@ namespace ModelTask.Models
         {
             return this.taskName;
         }
-        public string getTaskID()
+        public int getTaskID()
         {
-            return this.taskName;
+            return this.taskID;
         }
         public void setTaskName(string taskName)
         {
@@ -69,14 +69,14 @@ namespace ModelTask.Models
             if (this.observation != null)
                 return this.observation;
             else
-                throw new Exception("Não existe nenhuma observação");
+                throw new Exception("Nï¿½o existe nenhuma observaï¿½ï¿½o");
         }
         public User getResponsableUser()
         {
             if (this.responsableUser != null)
                 return this.responsableUser;
             else
-                throw new Exception("Não existe nenhum usuário responsável");
+                throw new Exception("Nï¿½o existe nenhum usuï¿½rio responsï¿½vel");
         }
         public void setResposableUser(User user)
         {

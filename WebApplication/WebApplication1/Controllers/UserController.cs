@@ -46,7 +46,7 @@ namespace UserController.Controllers
             }
             else
             {
-                throw new Exception("Nenhum usuário cadastrado");
+                throw new Exception("Nenhum usuï¿½rio cadastrado");
             }
 
         }
@@ -55,11 +55,10 @@ namespace UserController.Controllers
         public void updateUser(int userID)
         {
             int count = 0;
-            foreach (User user1 int this.usersList)
+            foreach (User user1 in this.usersList)
             {
                 if (user1.getUserID() == userID) { 
-                    user1.setUserID(userID);
-                    user1.setUserName(user1.getUserName());
+                    user1.setName(user1.getName());
                     user1.setPassword(user1.getPassword());
                     usersList[count] = user1;
                 }
@@ -67,7 +66,7 @@ namespace UserController.Controllers
             }
         }
 
-        [HttpRemove("{userID}")]
+        [HttpDelete("{userID}")]
         public Boolean removeUser(int userID)
         {
             if (this.usersList != null)
@@ -81,13 +80,10 @@ namespace UserController.Controllers
                     }
                 }
             }
-            else
-            {
-                return false;
-            }
+            return false;
         }
 
-        [HttpRemove("{projectID}")]
+        [HttpDelete("{projectID}")]
         public Boolean removeAssociatedProject(int projectID)
         {
             Boolean foundedProject = false;
@@ -99,7 +95,7 @@ namespace UserController.Controllers
                     {
                         try
                         {
-                            this.associatedProjects.Remove(project);
+                            this.associatedProjects.Remove(project1);
                             foundedProject = true;
                         }
                         catch (Exception e)
