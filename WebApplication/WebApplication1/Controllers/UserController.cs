@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
 using ModelUser.Models;
-using ModelProject.Models;
 
 namespace UserController.Controllers
 {
@@ -8,14 +7,13 @@ namespace UserController.Controllers
     [Route("{userController}")]
     class UserController : Controller
     {
-        private User user;
-        List<User> usersList;
-        private List<int>? associatedProjectsID;
+        private readonly User user;
+        private List<User> usersList;
 
         public UserController(User user)
         {
             this.user = new User(user.getName(), user.getEmail(), user.getPassword());
-            if (this.usersList == null)
+            if (this.IsUsersListEmpty())
             {
                 this.usersList = new List<User> { user };
             }
@@ -27,51 +25,56 @@ namespace UserController.Controllers
         public UserController()
         {
             this.user = new User();
-            if (this.usersList == null)
+            if (this.IsUsersListEmpty())
             {
                 this.usersList = new List<User> { user };
             }
             else
             {
-                this.usersList.Add(user);
+                this.usersList.Add(this.user);
             }
         }
 
         [HttpGet]
         public List<User> GetAllUsers()
         {
-            if (this.usersList != null)
+            if (this.IsUsersListEmpty())
             {
-                return this.usersList;
+                throw new Exception("Nenhum usu�rio cadastrado");
             }
             else
             {
-                throw new Exception("Nenhum usu�rio cadastrado");
+                return this.usersList;
             }
 
         }
 
         [HttpPut("{userID}")]
-        public void updateUser(int userID)
+        public void UpdateUser(int userID)
         {
-            int count = 0;
-            foreach (User user1 in this.usersList)
+            if (!this.IsUsersListEmpty())
             {
-                if (user1.getUserID() == userID) { 
-                    user1.setName(user1.getName());
-                    user1.setPassword(user1.getPassword());
-                    usersList[count] = user1;
+                int count = 0;
+                foreach (User user1 in this.usersList)
+                {
+                    if (this.user.getUserID() == userID)
+                    {
+                        this.user.setName(user1.getName());
+                        this.user.setPassword(user1.getPassword());
+                        this.usersList[count] = user1;
+                    }
+                    count++;
                 }
-                count++;
             }
+
         }
 
         [HttpDelete("{userID}")]
-        public Boolean removeUser(int userID)
+        public Boolean RemoveUser(int userID)
         {
-            if (this.usersList != null)
+            if (!this.IsUsersListEmpty())
             {
-                foreach(User user1 in usersList)
+                foreach (User user1 in usersList)
                 {
                     if (user1.getUserID() == userID)
                     {
@@ -81,6 +84,20 @@ namespace UserController.Controllers
                 }
             }
             return false;
+        }
+
+        // if tretur
+        private bool IsUsersListEmpty()
+        {
+            if (this.usersList == null)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
         }
     }
 }

@@ -9,8 +9,8 @@ namespace WebApplication1.Controllers
     [Route("[taskController]")]
     class TaskController : Controller
     {
-        ModelTask.Models.Task task;
-        List<ModelTask.Models.Task> taskList;
+        private readonly ModelTask.Models.Task task;
+        private List<ModelTask.Models.Task> taskList;
 
         public TaskController(string taskName, int projectID)
         {
@@ -26,9 +26,9 @@ namespace WebApplication1.Controllers
         }
 
         [HttpDelete("{taskID}")]
-        public void removeTask(int taskID)
+        public void RemoveTask(int taskID)
         {
-            if (this.taskList != null)
+            if (!this.IsTaskListEmpty())
             {
                 foreach(ModelTask.Models.Task task1 in this.taskList)
                 {
@@ -52,21 +52,32 @@ namespace WebApplication1.Controllers
         }
 
         [HttpPut("{taskID}")]
-        public void updateTask(int taskID)
+        public void UpdateTask(int taskID)
         {
-            foreach (ModelTask.Models.Task task1 in this.taskList)
-            {
-                if (taskID == task1.getTaskID())
+            if (!this.IsTaskListEmpty()) 
+            { 
+                foreach (ModelTask.Models.Task task1 in this.taskList)
                 {
-                    this.task = task1;
+                    if (taskID == task1.getTaskID())
+                    {
+                        this.taskList[taskID] = task1;
+                    }
                 }
             }
         }
 
         [HttpGet]
-        public List<ModelTask.Models.Task> viewTask()
+        public List<ModelTask.Models.Task> ViewTask()
         {
             return this.taskList;
+        }
+
+        private bool IsTaskListEmpty()
+        {
+            if (this.taskList == null)
+            { return true;} 
+            else 
+            { return false; }
         }
     }
 }

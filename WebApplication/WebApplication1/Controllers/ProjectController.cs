@@ -8,16 +8,16 @@ namespace WebApplication1.Controllers
     [ApiController]
     [Route("[projectController]")]
 
-    class ProjectController : Controller
+    public class ProjectController : Controller
     {
-        private User user;
-        Project project;
-        List<Project> projectsList;
+        private readonly User user;
+        private readonly Project project;
+        private List<Project> projectsList;
 
         public ProjectController(User user)
         {
             this.project = new Project();
-            if (this.projectsList == null)
+            if (this.IsProjectsListEmpty())
             {
                 this.projectsList = new List<Project> { project };
             }
@@ -31,21 +31,21 @@ namespace WebApplication1.Controllers
         public ProjectController(User user, Project project)
         {
             this.project = new Project(user, project.getProjectName());
-            if (this.projectsList != null)
+            if (this.IsProjectsListEmpty())
             {
-                this.projectsList = this.addProject(user, project);
+                this.projectsList = this.AddProject(project);
                 this.user = user;
             }
             else
             {
                 this.user = user;
-                this.projectsList = this.addProject(this.user, project);
+                this.projectsList = this.AddProject(project);
             }
             
         }
 
         [HttpPost]
-        private List<Project> addProject(User user, Project project){
+        public List<Project> AddProject(Project project){
             List<Project> auxProject = this.projectsList;
             if (auxProject != null){
                 auxProject.Add(project);
@@ -56,11 +56,11 @@ namespace WebApplication1.Controllers
         }
 
         [HttpPut("{projectID}")]
-        private Boolean updateProject(int projectID)
+        public Boolean UpdateProject(int projectID)
         {
             int count = 0;
             Boolean foundedProject = false;
-            if (this.projectsList != null)
+            if (this.IsProjectsListEmpty())
             {
                 foreach (Project projectsList1 in this.projectsList)
                 {
@@ -77,15 +77,15 @@ namespace WebApplication1.Controllers
         }
 
         [HttpGet]
-        public List<Project> viewAllProjects()
+        public List<Project> ViewAllProjects()
         {
             return this.projectsList;
         }
 
         [HttpDelete("{projectID}")]
-        public Boolean removeProject(int projectID)
+        public bool RemoveProject(int projectID)
         {
-            if (this.projectsList != null && this.projectsList.Contains(project))
+            if (this.IsProjectsListEmpty())
             {
                 foreach(Project project in this.projectsList)
                 {
@@ -105,5 +105,17 @@ namespace WebApplication1.Controllers
             }
             return false;
         }
+
+        private bool IsProjectsListEmpty()
+        {
+            if (this.projectsList == null)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
+}

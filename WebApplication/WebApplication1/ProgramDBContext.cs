@@ -17,7 +17,7 @@ namespace projectManeger.Data
 
         public DbSet<ModelTask.Models.Task> task { get; set; }
 
-        public DbSet<ModelProject.Models.Project> project { get; set; }
+        public DbSet<Project> project { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
