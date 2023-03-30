@@ -13,7 +13,7 @@ namespace ModelProject.Models
         public string projectName;
         public List<ModelTask.Models.Task>? tasks;
         private int doneTasks = 0;
-        private int projectID;
+        private readonly int projectID;
         private static int nextID = 0;
 
         public Project(User adminUser, string projectName)
@@ -41,17 +41,17 @@ namespace ModelProject.Models
             return this.adminUser;
         }
 
-        private void setAdminUser(User user)
+        private void SetAdminUser(User user)
         {
             this.adminUser = user;
         }
 
-        public int getProjectID()
+        public int GetProjectID()
         {
             return this.projectID;
         }
 
-        public List<User> getAssociatedUsers()
+        public List<User> GetAssociatedUsers()
         {
             if (this.associatedUsers == null)
             {
@@ -60,12 +60,12 @@ namespace ModelProject.Models
             return this.associatedUsers;
         }
 
-        public string getProjectName()
+        public string GetProjectName()
         {
             return this.projectName;
         }
 
-        public void setProjectName(string projectName)
+        public void SetProjectName(string projectName)
         {
             this.projectName = projectName;
         }

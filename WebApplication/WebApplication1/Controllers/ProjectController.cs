@@ -30,7 +30,7 @@ namespace WebApplication1.Controllers
 
         public ProjectController(User user, Project project)
         {
-            this.project = new Project(user, project.getProjectName());
+            this.project = new Project(user, project.GetProjectName());
             if (this.IsProjectsListEmpty())
             {
                 this.projectsList = this.AddProject(project);
@@ -64,7 +64,7 @@ namespace WebApplication1.Controllers
             {
                 foreach (Project projectsList1 in this.projectsList)
                 {
-                    if (projectID == this.projectsList[count].getProjectID())
+                    if (projectID == this.projectsList[count].GetProjectID())
                     {
                         this.projectsList[count] = projectsList1;
                         foundedProject = true;
@@ -89,7 +89,7 @@ namespace WebApplication1.Controllers
             {
                 foreach(Project project in this.projectsList)
                 {
-                    if(project.getProjectID() == projectID)
+                    if(project.GetProjectID() == projectID)
                     {
                         try
                         {
