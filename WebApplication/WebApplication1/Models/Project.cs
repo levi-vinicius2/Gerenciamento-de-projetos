@@ -22,7 +22,7 @@ namespace ModelProject.Models
             {
                 this.projectName = projectName;
                 this.projectID = nextID++;
-                this.adminUser = new User(adminUser.getName(), adminUser.getEmail(), adminUser.getPassword());
+                this.adminUser = new User(adminUser.GetName(), adminUser.GetEmail(), adminUser.GetPassword());
             }
             else
             {

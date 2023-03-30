@@ -12,7 +12,7 @@ namespace ModelUser.Models
         public string name;
         public string email;
         private string password;
-        private int userID = 0;
+        private readonly int userID = 0;
         private static int nextUserID = 0;
         public List<Project>? associatedProjects;
 
@@ -34,39 +34,39 @@ namespace ModelUser.Models
 
 
 
-        public void setName(string name)
+        public void SetName(string name)
         {
             this.name = name;
         }
 
-        public string getPassword()
+        public string GetPassword()
         {
             return this.password;
         }
 
-        public string getName()
+        public string GetName()
         {
             return this.name;
         }
 
-        public void setEmail(string email)
+        public void SetEmail(string email)
         {
             this.email = email;
         }
 
-        public string getEmail()
+        public string GetEmail()
         {
             return this.email;
         }
 
-        public void setPassword(string password)
+        public void SetPassword(string password)
         {
             this.password = password;
         }
 
-        public int getUserID()
+        public int GetUserID()
         {
-            return this.getUserID();
+            return this.GetUserID();
         }
 
 

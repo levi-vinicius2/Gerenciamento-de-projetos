@@ -12,7 +12,7 @@ namespace UserController.Controllers
 
         public UserController(User user)
         {
-            this.user = new User(user.getName(), user.getEmail(), user.getPassword());
+            this.user = new User(user.GetName(), user.GetEmail(), user.GetPassword());
             if (this.IsUsersListEmpty())
             {
                 this.usersList = new List<User> { user };
@@ -57,10 +57,10 @@ namespace UserController.Controllers
                 int count = 0;
                 foreach (User user1 in this.usersList)
                 {
-                    if (this.user.getUserID() == userID)
+                    if (this.user.GetUserID() == userID)
                     {
-                        this.user.setName(user1.getName());
-                        this.user.setPassword(user1.getPassword());
+                        this.user.SetName(user1.GetName());
+                        this.user.SetPassword(user1.GetPassword());
                         this.usersList[count] = user1;
                     }
                     count++;
@@ -76,7 +76,7 @@ namespace UserController.Controllers
             {
                 foreach (User user1 in usersList)
                 {
-                    if (user1.getUserID() == userID)
+                    if (user1.GetUserID() == userID)
                     {
                         this.usersList.Remove(user);
                         return true;

@@ -25,7 +25,7 @@ namespace WebApplication1.Controllers
             {
                 this.projectsList.Add(project);
             }
-            this.user = new User(user.getName(), user.getEmail(), user.getPassword());
+            this.user = new User(user.GetName(), user.GetEmail(), user.GetPassword());
         }
 
         public ProjectController(User user, Project project)
