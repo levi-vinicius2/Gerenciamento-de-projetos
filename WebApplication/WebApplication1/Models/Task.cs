@@ -14,16 +14,17 @@ namespace ModelTask.Models
         private DateTime finalDate;
         private Boolean overdueTask;
         private Boolean doneTask;
-        private int taskID;
+        private readonly int taskID;
         private static int nextTaskID = 0;
         private string? observation;
-        private int projectID;
+        private readonly int projectID;
 
         public Task(string taskName, int projectID)
         {
             this.taskName = taskName;
             this.taskID = nextTaskID++;
             this.projectID = projectID;
+            this.SetStartDate();
         }
 
         public Task()
@@ -31,55 +32,56 @@ namespace ModelTask.Models
             this.taskName = "Nome Tarefa 1";
             this.taskID = nextTaskID++;
             this.projectID = 1000;
+            this.SetStartDate();
         }
 
-        public string getTaskName()
+        public string GetTaskName()
         {
             return this.taskName;
         }
-        public int getTaskID()
+        public int GetTaskID()
         {
             return this.taskID;
         }
-        public void setTaskName(string taskName)
+        public void SetTaskName(string taskName)
         {
             this.taskName = taskName;
         }
-        private void setFinalDate(DateTime finalDate)
+        private void SetFinalDate(DateTime finalDate)
         {
             this.finalDate = finalDate;
         }
-        private void setStartDate()
+        private void SetStartDate()
         {
             this.startDate = DateTime.Now;
         }
-        public DateTime getStartDate()
+        public DateTime GetStartDate()
         {
             return this.startDate;
         }
-        public DateTime getFinalDate()
+        public DateTime GetFinalDate()
         {
             return this.finalDate;
         }
-        public void setObservation(string observation)
+        public void SetObservation(string observation)
         {
             this.observation = observation;
         }
-        public string getObservation()
+        public string GetObservation()
         {
             if (this.observation != null)
                 return this.observation;
             else
                 throw new Exception("N�o existe nenhuma observa��o");
         }
-        public User getResponsableUser()
+        public User GetResponsableUser()
         {
             if (this.responsableUser != null)
                 return this.responsableUser;
             else
                 throw new Exception("N�o existe nenhum usu�rio respons�vel");
         }
-        public void setResposableUser(User user)
+        public void SetResposableUser(User user)
         {
             this.responsableUser = user;
         }

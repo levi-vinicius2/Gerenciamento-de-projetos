@@ -32,7 +32,7 @@ namespace WebApplication1.Controllers
             {
                 foreach(ModelTask.Models.Task task1 in this.taskList)
                 {
-                    if (taskID == task1.getTaskID())
+                    if (taskID == task1.GetTaskID())
                     {
                         try
                         {
@@ -58,7 +58,7 @@ namespace WebApplication1.Controllers
             { 
                 foreach (ModelTask.Models.Task task1 in this.taskList)
                 {
-                    if (taskID == task1.getTaskID())
+                    if (taskID == task1.GetTaskID())
                     {
                         this.taskList[taskID] = task1;
                     }
