@@ -6,7 +6,6 @@ using ModelTask.Models;
 
 namespace ModelUser.Models
 {
-
     public class User
     {
         public string name;
@@ -21,7 +20,6 @@ namespace ModelUser.Models
             this.name = "First user";
             this.email = "levi.vinicius@outlook.com";
             this.password = "123456";
-
         }
 
         public User(string userName, string userMail, string userPassword)
@@ -32,45 +30,18 @@ namespace ModelUser.Models
             this.userID = nextUserID++;
         }
 
+        public void SetName(string name) { this.name = name; }
 
+        public string GetPassword() { return this.password; }
 
-        public void SetName(string name)
-        {
-            this.name = name;
-        }
+        public string GetName() { return this.name; }
 
-        public string GetPassword()
-        {
-            return this.password;
-        }
+        public void SetEmail(string email) { this.email = email; }
 
-        public string GetName()
-        {
-            return this.name;
-        }
+        public string GetEmail() { return this.email; }
 
-        public void SetEmail(string email)
-        {
-            this.email = email;
-        }
+        public void SetPassword(string password) { this.password = password; }
 
-        public string GetEmail()
-        {
-            return this.email;
-        }
-
-        public void SetPassword(string password)
-        {
-            this.password = password;
-        }
-
-        public int GetUserID()
-        {
-            return this.GetUserID();
-        }
-
-
-
-
+        public int GetUserID() { return this.GetUserID(); }
     }
 }

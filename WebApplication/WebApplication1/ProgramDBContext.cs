@@ -7,21 +7,16 @@ namespace projectManeger.Data
 {
     public class ProjectManeger : DbContext
     {
+        private ProjectManeger projectManeger;
+        public DbSet<ModelUser.Models.User> Users { get; set; }
+
+        public DbSet<ModelTask.Models.Task> Tasks { get; set; }
+
+        public DbSet<Project> Project { get; set; }
+
         public ProjectManeger(DbContextOptions<ProjectManeger> options) : base(options)
-        {
-            
-        }
-
-
-        public DbSet<User> users { get; set; }
-
-        public DbSet<ModelTask.Models.Task> task { get; set; }
-
-        public DbSet<Project> project { get; set; }
-
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            base.OnModelCreating(modelBuilder);
-        }
+        { this.projectManeger = new ProjectManeger(options); }
+       
+        protected override void OnModelCreating(ModelBuilder modelBuilder) { base.OnModelCreating(modelBuilder); }
     }
 }

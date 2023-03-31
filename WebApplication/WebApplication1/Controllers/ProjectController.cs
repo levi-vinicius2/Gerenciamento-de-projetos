@@ -3,53 +3,53 @@ using ModelProject.Models;
 using ModelTask.Models;
 using ModelUser.Models;
 
-namespace WebApplication1.Controllers
+namespace User.Controllers
 {
     [ApiController]
     [Route("[projectController]")]
 
     public class ProjectController : Controller
     {
-        private readonly User user;
+        private readonly ModelUser.Models.User user;
         private readonly Project project;
         private List<Project> projectsList;
 
-        public ProjectController(User user)
+        public ProjectController(ModelUser.Models.User user)
         {
             this.project = new Project();
-            if (this.IsProjectsListEmpty())
+            if(this.IsProjectsListEmpty())
             {
                 this.projectsList = new List<Project> { project };
-            }
-            else
+            } else
             {
                 this.projectsList.Add(project);
             }
-            this.user = new User(user.GetName(), user.GetEmail(), user.GetPassword());
+            this.user = new ModelUser.Models.User(user.GetName(), user.GetEmail(), user.GetPassword());
         }
 
-        public ProjectController(User user, Project project)
+        public ProjectController(ModelUser.Models.User user, Project project)
         {
             this.project = new Project(user, project.GetProjectName());
-            if (this.IsProjectsListEmpty())
+            if(this.IsProjectsListEmpty())
             {
                 this.projectsList = this.AddProject(project);
                 this.user = user;
-            }
-            else
+            } else
             {
                 this.user = user;
                 this.projectsList = this.AddProject(project);
             }
-            
         }
 
         [HttpPost]
-        public List<Project> AddProject(Project project){
+        public List<Project> AddProject(Project project)
+        {
             List<Project> auxProject = this.projectsList;
-            if (auxProject != null){
+            if(auxProject != null)
+            {
                 auxProject.Add(project);
-            } else {
+            } else
+            {
                 auxProject = new List<Project> { project };
             }
             return auxProject;
@@ -60,11 +60,11 @@ namespace WebApplication1.Controllers
         {
             int count = 0;
             Boolean foundedProject = false;
-            if (this.IsProjectsListEmpty())
+            if(this.IsProjectsListEmpty())
             {
-                foreach (Project projectsList1 in this.projectsList)
+                foreach(Project projectsList1 in this.projectsList)
                 {
-                    if (projectID == this.projectsList[count].GetProjectID())
+                    if(projectID == this.projectsList[count].GetProjectID())
                     {
                         this.projectsList[count] = projectsList1;
                         foundedProject = true;
@@ -77,15 +77,12 @@ namespace WebApplication1.Controllers
         }
 
         [HttpGet]
-        public List<Project> ViewAllProjects()
-        {
-            return this.projectsList;
-        }
+        public List<Project> ViewAllProjects() { return this.projectsList; }
 
         [HttpDelete("{projectID}")]
         public bool RemoveProject(int projectID)
         {
-            if (this.IsProjectsListEmpty())
+            if(this.IsProjectsListEmpty())
             {
                 foreach(Project project in this.projectsList)
                 {
@@ -96,23 +93,21 @@ namespace WebApplication1.Controllers
                             this.projectsList.Remove(project);
                         } catch(Exception e)
                         {
-                            throw new Exception("Erro: "+e);
+                            throw new Exception("Erro: " + e);
                         }
                         return true;
                     }
                 }
-                
             }
             return false;
         }
 
         private bool IsProjectsListEmpty()
         {
-            if (this.projectsList == null)
+            if(this.projectsList == null)
             {
                 return true;
-            }
-            else
+            } else
             {
                 return false;
             }

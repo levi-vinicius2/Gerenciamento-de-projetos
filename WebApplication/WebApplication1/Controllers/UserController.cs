@@ -7,15 +7,15 @@ namespace UserController.Controllers
     [Route("{userController}")]
     class UserController : Controller
     {
-        private readonly User user;
-        private List<User> usersList;
+        private readonly ModelUser.Models.User user;
+        private List<ModelUser.Models.User> usersList;
 
-        public UserController(User user)
+        public UserController(ModelUser.Models.User user)
         {
-            this.user = new User(user.GetName(), user.GetEmail(), user.GetPassword());
+            this.user = new ModelUser.Models.User(user.GetName(), user.GetEmail(), user.GetPassword());
             if (this.IsUsersListEmpty())
             {
-                this.usersList = new List<User> { user };
+                this.usersList = new List<ModelUser.Models.User> { user };
             }
             else
             {
@@ -24,10 +24,10 @@ namespace UserController.Controllers
         }
         public UserController()
         {
-            this.user = new User();
+            this.user = new ModelUser.Models.User();
             if (this.IsUsersListEmpty())
             {
-                this.usersList = new List<User> { user };
+                this.usersList = new List<ModelUser.Models.User> { user };
             }
             else
             {
@@ -36,7 +36,7 @@ namespace UserController.Controllers
         }
 
         [HttpGet]
-        public List<User> GetAllUsers()
+        public List<ModelUser.Models.User> GetAllUsers()
         {
             if (this.IsUsersListEmpty())
             {
@@ -55,7 +55,7 @@ namespace UserController.Controllers
             if (!this.IsUsersListEmpty())
             {
                 int count = 0;
-                foreach (User user1 in this.usersList)
+                foreach (ModelUser.Models.User user1 in this.usersList)
                 {
                     if (this.user.GetUserID() == userID)
                     {
@@ -74,7 +74,7 @@ namespace UserController.Controllers
         {
             if (!this.IsUsersListEmpty())
             {
-                foreach (User user1 in usersList)
+                foreach (ModelUser.Models.User user1 in usersList)
                 {
                     if (user1.GetUserID() == userID)
                     {

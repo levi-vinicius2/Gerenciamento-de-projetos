@@ -3,7 +3,7 @@ using ModelProject.Models;
 using ModelTask.Models;
 using ModelUser.Models;
 
-namespace WebApplication1.Controllers
+namespace User.Controllers
 {
     [ApiController]
     [Route("[taskController]")]
@@ -15,11 +15,10 @@ namespace WebApplication1.Controllers
         public TaskController(string taskName, int projectID)
         {
             this.task = new ModelTask.Models.Task(taskName, projectID);
-            if (this.taskList == null)
+            if(this.taskList == null)
             {
                 this.taskList = new List<ModelTask.Models.Task> { task };
-            }
-            else
+            } else
             {
                 this.taskList.Add(task);
             }
@@ -28,24 +27,22 @@ namespace WebApplication1.Controllers
         [HttpDelete("{taskID}")]
         public void RemoveTask(int taskID)
         {
-            if (!this.IsTaskListEmpty())
+            if(!this.IsTaskListEmpty())
             {
                 foreach(ModelTask.Models.Task task1 in this.taskList)
                 {
-                    if (taskID == task1.GetTaskID())
+                    if(taskID == task1.GetTaskID())
                     {
                         try
                         {
                             this.taskList.Remove(task1);
-                        }
-                        catch (Exception e)
+                        } catch(Exception e)
                         {
-                            throw new Exception(e+"Erro");
+                            throw new Exception(e + "Erro");
                         }
                     }
                 }
-            }
-            else
+            } else
             {
                 throw new Exception("Erro: tarefa n�o encontrada");
             }
@@ -54,11 +51,11 @@ namespace WebApplication1.Controllers
         [HttpPut("{taskID}")]
         public void UpdateTask(int taskID)
         {
-            if (!this.IsTaskListEmpty()) 
-            { 
-                foreach (ModelTask.Models.Task task1 in this.taskList)
+            if(!this.IsTaskListEmpty())
+            {
+                foreach(ModelTask.Models.Task task1 in this.taskList)
                 {
-                    if (taskID == task1.GetTaskID())
+                    if(taskID == task1.GetTaskID())
                     {
                         this.taskList[taskID] = task1;
                     }
@@ -67,17 +64,17 @@ namespace WebApplication1.Controllers
         }
 
         [HttpGet]
-        public List<ModelTask.Models.Task> ViewTask()
-        {
-            return this.taskList;
-        }
+        public List<ModelTask.Models.Task> ViewTask() { return this.taskList; }
 
         private bool IsTaskListEmpty()
         {
-            if (this.taskList == null)
-            { return true;} 
-            else 
-            { return false; }
+            if(this.taskList == null)
+            {
+                return true;
+            } else
+            {
+                return false;
+            }
         }
     }
 }

@@ -9,7 +9,7 @@ namespace ModelTask.Models
     public class Task
     {
         public string taskName;
-        private User? responsableUser;
+        private ModelUser.Models.User? responsableUser;
         private DateTime startDate;
         private DateTime finalDate;
         private Boolean overdueTask;
@@ -35,55 +35,31 @@ namespace ModelTask.Models
             this.SetStartDate();
         }
 
-        public string GetTaskName()
-        {
-            return this.taskName;
-        }
-        public int GetTaskID()
-        {
-            return this.taskID;
-        }
-        public void SetTaskName(string taskName)
-        {
-            this.taskName = taskName;
-        }
-        private void SetFinalDate(DateTime finalDate)
-        {
-            this.finalDate = finalDate;
-        }
-        private void SetStartDate()
-        {
-            this.startDate = DateTime.Now;
-        }
-        public DateTime GetStartDate()
-        {
-            return this.startDate;
-        }
-        public DateTime GetFinalDate()
-        {
-            return this.finalDate;
-        }
-        public void SetObservation(string observation)
-        {
-            this.observation = observation;
-        }
+        public string GetTaskName() { return this.taskName; }
+        public int GetTaskID() { return this.taskID; }
+        public void SetTaskName(string taskName) { this.taskName = taskName; }
+        private void SetFinalDate(DateTime finalDate) { this.finalDate = finalDate; }
+        private void SetStartDate() { this.startDate = DateTime.Now; }
+        public DateTime GetStartDate() { return this.startDate; }
+        public DateTime GetFinalDate() { return this.finalDate; }
+        public void SetObservation(string observation) { this.observation = observation; }
+
         public string GetObservation()
         {
-            if (this.observation != null)
+            if(this.observation != null)
                 return this.observation;
             else
                 throw new Exception("N�o existe nenhuma observa��o");
         }
-        public User GetResponsableUser()
+
+        public ModelUser.Models.User GetResponsableUser()
         {
-            if (this.responsableUser != null)
+            if(this.responsableUser != null)
                 return this.responsableUser;
             else
                 throw new Exception("N�o existe nenhum usu�rio respons�vel");
         }
-        public void SetResposableUser(User user)
-        {
-            this.responsableUser = user;
-        }
+
+        public void SetResposableUser(ModelUser.Models.User user) { this.responsableUser = user; }
     }
 }

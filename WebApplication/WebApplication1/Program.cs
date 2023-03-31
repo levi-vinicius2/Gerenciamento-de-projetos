@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.SqlServer;
 using projectManeger.Data;
+using User.Repositories;
 
 namespace projectManager
 {
@@ -21,6 +22,8 @@ namespace projectManager
                 .AddDbContext<ProjectManeger>(
                     options => options.UseSqlServer(builder.Configuration.GetConnectionString("DataBase"))
                 );
+
+            builder.Services.AddScoped<User.Repositories.UserRepositorie, User.Repositories.UserRepositorie>();
                 
            // builder.Services.AddScoped<>
 
