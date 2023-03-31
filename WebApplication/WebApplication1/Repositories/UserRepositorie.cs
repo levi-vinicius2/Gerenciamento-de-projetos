@@ -8,20 +8,13 @@ namespace User.Repositories
     {
         private readonly ProjectManeger? programDBContext;
 
-        public UserRepositorie (ProjectManeger? programDBContext)
-        {
-            this.programDBContext = programDBContext;
-        }
+        public UserRepositorie(ProjectManeger? programDBContext) { this.programDBContext = programDBContext; }
 
         public async Task<ModelUser.Models.User> SearchByID(int id)
-        {
-            return await programDBContext.Users.FirstOrDefaultAsync(x => x.GetUserID().Equals(id));
-        }
+        { return await programDBContext.Users.FirstOrDefaultAsync(x => x.GetUserID().Equals(id)); }
 
         public async Task<List<ModelUser.Models.User>> SearchAllUsers()
-        {
-            return await programDBContext.Users.ToListAsync();
-        }
+        { return await programDBContext.Users.ToListAsync(); }
 
         public async Task<ModelUser.Models.User> Add(ModelUser.Models.User user)
         {
@@ -33,10 +26,10 @@ namespace User.Repositories
         public async Task<ModelUser.Models.User> Update(ModelUser.Models.User user, int id)
         {
             ModelUser.Models.User userByID = await SearchByID(id);
-            if (userByID == null)
+            if(userByID == null)
             {
                 throw new Exception("ID nao encontrado no banco de dados");
-            } 
+            }
 
             userByID.SetName(user.GetName());
             userByID.SetEmail(user.GetEmail());
@@ -51,7 +44,7 @@ namespace User.Repositories
         public async Task<ModelUser.Models.User> Delete(ModelUser.Models.User user, int id)
         {
             ModelUser.Models.User userByID = await SearchByID(id);
-            if ( userByID == null )
+            if(userByID == null)
             {
                 throw new Exception("ID nao encontrado no banco de dados para realizar a exclusao de usuario");
             }
@@ -59,6 +52,9 @@ namespace User.Repositories
             userByID.SetEmail(user.GetEmail());
             userByID.SetName(user.GetName());
             userByID.SetPassword(user.GetPassword());
+
+            programDBContext.Users.Remove(userByID);
+            programDBContext.SaveChanges();
 
             return userByID;
         }
