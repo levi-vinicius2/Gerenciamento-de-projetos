@@ -1,7 +1,6 @@
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.SqlServer;
 using projectManeger.Data;
-using User.Repositories;
+using Microsoft.Extensions.Configuration;
 
 namespace projectManager
 {
@@ -19,13 +18,15 @@ namespace projectManager
             builder.Services.AddSwaggerGen();
 
             builder.Services.AddEntityFrameworkSqlServer()
-                .AddDbContext<ProjectManeger>(
+                .AddDbContext<projectManeger.Data.ProjectManeger>(
                     options => options.UseSqlServer(builder.Configuration.GetConnectionString("DataBase"))
                 );
 
-            builder.Services.AddScoped<User.Repositories.UserRepositorie, User.Repositories.UserRepositorie>();
-                
-           // builder.Services.AddScoped<>
+
+            builder.Services.AddScoped<Project.Repositories.ProjectRepositorie, Project.Repositories.ProjectRepositorie>();
+            builder.Services.AddScoped<Task.Repositories.TaskRepositorie, Task.Repositories.TaskRepositorie>();
+            builder.Services.AddScoped<User.Repositories.IUserRepositorie, User.Repositories.UserRepositorie>();
+
 
             var app = builder.Build();
 

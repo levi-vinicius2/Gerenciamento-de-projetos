@@ -1,23 +1,25 @@
 using Microsoft.EntityFrameworkCore;
-using ModelUser.Models;
-using ModelTask.Models;
-using ModelProject.Models;
 
 namespace projectManeger.Data
 {
     public class ProjectManeger : DbContext
     {
-        private ProjectManeger projectManeger;
+        public DbSet<ModelUser.Models.User> UsersDBContext { get; set; }
 
-        public DbSet<ModelUser.Models.User> Users { get; set; }
+        public DbSet<ModelTask.Models.Task> TasksDBContext { get; set; }
 
-        public DbSet<ModelTask.Models.Task> Tasks { get; set; }
-
-        public DbSet<ModelProject.Models.Project> Project { get; set; }
+        public DbSet<ModelProject.Models.Project> ProjectDBContext { get; set; }
 
         public ProjectManeger(DbContextOptions<ProjectManeger> options) : base(options)
-        { this.projectManeger = new ProjectManeger(options); }
+        { }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder) { base.OnModelCreating(modelBuilder); }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.ApplyConfiguration<ModelUser.Models.User>(new UserMap.Map.UserMap());
+            modelBuilder.ApplyConfiguration<ModelProject.Models.Project>(new ProjectMap.Map.ProjectMap());
+            modelBuilder.ApplyConfiguration<ModelTask.Models.Task>(new TaskMap.Map.TaskMap());
+
+            base.OnModelCreating(modelBuilder);
+        }
     }
 }

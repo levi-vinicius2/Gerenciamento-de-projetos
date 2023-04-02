@@ -1,103 +1,69 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http;
 using ModelUser.Models;
 
-namespace UserController.Controllers
+namespace User.Controllers
 {
     [ApiController]
-    [Route("{userController}")]
-    class UserController : Controller
+    [Route("api/[controller]")]
+    public class UserController : ControllerBase
     {
-        private readonly ModelUser.Models.User user;
+        private ModelUser.Models.User user;
         private List<ModelUser.Models.User> usersList;
+        private User.Repositories.UserRepositorie userRepositorie;
 
-        public UserController(ModelUser.Models.User user)
+        public UserController(ModelUser.Models.User user, User.Repositories.UserRepositorie userR)
         {
-            this.user = new ModelUser.Models.User(user.GetName(), user.GetEmail(), user.GetPassword());
-            if (this.IsUsersListEmpty())
-            {
-                this.usersList = new List<ModelUser.Models.User> { user };
-            }
-            else
-            {
-                this.usersList.Add(user);
-            }
+            this.userRepositorie = userR;
+            this.AddUser(user);
         }
-        public UserController()
+
+        [HttpPost]
+        public async Task<ActionResult<ModelUser.Models.User>> AddUser([FromBody]ModelUser.Models.User user)
         {
-            this.user = new ModelUser.Models.User();
-            if (this.IsUsersListEmpty())
-            {
-                this.usersList = new List<ModelUser.Models.User> { user };
-            }
-            else
-            {
-                this.usersList.Add(this.user);
-            }
+            ModelUser.Models.User user1 = await this.userRepositorie.Add(user);
+            return Ok(user1);
         }
 
         [HttpGet]
-        public List<ModelUser.Models.User> GetAllUsers()
+        public async Task<ActionResult<List<ModelUser.Models.User>>> GetAllUsers()
         {
-            if (this.IsUsersListEmpty())
-            {
-                throw new Exception("Nenhum usu�rio cadastrado");
-            }
-            else
-            {
-                return this.usersList;
-            }
+            List<ModelUser.Models.User> users = await this.userRepositorie.SearchAllUsers();
+            return Ok(users);
+        }
 
+        [HttpGet("{userID}")]
+        public async Task<ActionResult<List<ModelUser.Models.User>>> GetUserByID(int id)
+        {
+            ModelUser.Models.User users = await this.userRepositorie.SearchByID(id);
+            return Ok(users);
         }
 
         [HttpPut("{userID}")]
-        public void UpdateUser(int userID)
+        public async Task<ActionResult<ModelUser.Models.User>> UpdateUser(ModelUser.Models.User user)
         {
-            if (!this.IsUsersListEmpty())
-            {
-                int count = 0;
-                foreach (ModelUser.Models.User user1 in this.usersList)
-                {
-                    if (this.user.GetUserID() == userID)
-                    {
-                        this.user.SetName(user1.GetName());
-                        this.user.SetPassword(user1.GetPassword());
-                        this.usersList[count] = user1;
-                    }
-                    count++;
-                }
-            }
-
+            ModelUser.Models.User user1 = await this.userRepositorie.Update(user);
+            return Ok(user1);
         }
 
         [HttpDelete("{userID}")]
-        public Boolean RemoveUser(int userID)
+        public async Task<ActionResult<ModelUser.Models.User>> RemoveUser(ModelUser.Models.User user)
         {
-            if (!this.IsUsersListEmpty())
-            {
-                foreach (ModelUser.Models.User user1 in usersList)
-                {
-                    if (user1.GetUserID() == userID)
-                    {
-                        this.usersList.Remove(user);
-                        return true;
-                    }
-                }
-            }
-            return false;
+            ModelUser.Models.User user1 = await this.userRepositorie.Delete(user);
+            return Ok(user1);
         }
 
         // if tretur
         private bool IsUsersListEmpty()
         {
-            if (this.usersList == null)
+            if(this.usersList == null)
             {
                 return true;
-            }
-            else
+            } else
             {
                 return false;
             }
-
         }
+
     }
 }

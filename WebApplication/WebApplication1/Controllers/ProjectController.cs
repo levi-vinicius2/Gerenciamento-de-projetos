@@ -1,113 +1,67 @@
 using Microsoft.AspNetCore.Mvc;
-using ModelProject.Models;
-using ModelTask.Models;
-using ModelUser.Models;
+using Microsoft.AspNetCore.Http;
 
-namespace User.Controllers
+namespace Project.Controllers
 {
     [ApiController]
-    [Route("[projectController]")]
-
-    public class ProjectController : Controller
+    [Route("api/[controller]")]
+    public class ProjectController : ControllerBase
     {
-        private readonly ModelUser.Models.User user;
-        private readonly Project project;
-        private List<Project> projectsList;
+        private ModelProject.Models.Project project;
+        private List<ModelProject.Models.Project> projectsList;
+        private Project.Repositories.ProjectRepositorie projectRepositorie;
 
-        public ProjectController(ModelUser.Models.User user)
+        public ProjectController(Project.Repositories.ProjectRepositorie projectRepositorie, ModelProject.Models.Project project)
         {
-            this.project = new Project();
-            if(this.IsProjectsListEmpty())
-            {
-                this.projectsList = new List<Project> { project };
-            } else
-            {
-                this.projectsList.Add(project);
-            }
-            this.user = new ModelUser.Models.User(user.GetName(), user.GetEmail(), user.GetPassword());
-        }
-
-        public ProjectController(ModelUser.Models.User user, Project project)
-        {
-            this.project = new Project(user, project.GetProjectName());
-            if(this.IsProjectsListEmpty())
-            {
-                this.projectsList = this.AddProject(project);
-                this.user = user;
-            } else
-            {
-                this.user = user;
-                this.projectsList = this.AddProject(project);
-            }
+            this.project = project;
+            this.projectRepositorie = projectRepositorie;
+            this.AddProject(this.project);
         }
 
         [HttpPost]
-        public List<Project> AddProject(Project project)
+        public async Task<ActionResult<ModelProject.Models.Project>> AddProject(
+            [FromBody] ModelProject.Models.Project project)
         {
-            List<Project> auxProject = this.projectsList;
-            if(auxProject != null)
-            {
-                auxProject.Add(project);
-            } else
-            {
-                auxProject = new List<Project> { project };
-            }
-            return auxProject;
+            ModelProject.Models.Project auxProject = await this.projectRepositorie.Add(project);
+            return Ok(auxProject);
         }
 
         [HttpPut("{projectID}")]
-        public Boolean UpdateProject(int projectID)
+        public async Task<ActionResult<ModelProject.Models.Project>> UpdateProject(ModelProject.Models.Project project)
         {
-            int count = 0;
-            Boolean foundedProject = false;
-            if(this.IsProjectsListEmpty())
-            {
-                foreach(Project projectsList1 in this.projectsList)
-                {
-                    if(projectID == this.projectsList[count].GetProjectID())
-                    {
-                        this.projectsList[count] = projectsList1;
-                        foundedProject = true;
-                        return foundedProject;
-                    }
-                    count++;
-                }
-            }
-            return foundedProject;
+            ModelProject.Models.Project project1 = await this.projectRepositorie.Update(project, project.projectID);
+            return Ok(project1);
         }
 
         [HttpGet]
-        public List<Project> ViewAllProjects() { return this.projectsList; }
+        public async Task<ActionResult<List<ModelProject.Models.Project>>> GetAllProjects()
+        {
+            List<ModelProject.Models.Project> projects = await this.projectRepositorie.SearchAllProjects();
+            return Ok(projects);
+        }
+
+        [HttpGet("{projectID}")]
+        public async Task<ActionResult<List<ModelProject.Models.Project>>> GetProjectByID(int id)
+        {
+            ModelProject.Models.Project projectByID = await this.projectRepositorie.SearchByID(id);
+            return Ok(projectByID);
+        }
 
         [HttpDelete("{projectID}")]
-        public bool RemoveProject(int projectID)
+        public async Task<ActionResult<ModelProject.Models.Project>> RemoveProject(ModelProject.Models.Project project)
         {
-            if(this.IsProjectsListEmpty())
-            {
-                foreach(Project project in this.projectsList)
-                {
-                    if(project.GetProjectID() == projectID)
-                    {
-                        try
-                        {
-                            this.projectsList.Remove(project);
-                        } catch(Exception e)
-                        {
-                            throw new Exception("Erro: " + e);
-                        }
-                        return true;
-                    }
-                }
-            }
-            return false;
+            ModelProject.Models.Project projectDelete = await this.projectRepositorie
+                .Delete(project, project.projectID);
+            return Ok(projectDelete);
         }
 
         private bool IsProjectsListEmpty()
         {
-            if(this.projectsList == null)
+            if (this.projectsList == null)
             {
                 return true;
-            } else
+            }
+            else
             {
                 return false;
             }

@@ -1,77 +1,69 @@
 using Microsoft.AspNetCore.Mvc;
-using ModelProject.Models;
-using ModelTask.Models;
-using ModelUser.Models;
+using projectManeger.Data;
 
-namespace User.Controllers
+namespace Task.Controllers
 {
     [ApiController]
-    [Route("[taskController]")]
-    class TaskController : Controller
+    [Route("api/[controller]")]
+    public class TaskController : ControllerBase
     {
-        private readonly ModelTask.Models.Task task;
-        private List<ModelTask.Models.Task> taskList;
+        private readonly ModelTask.Models.Task tasks;
+        private List<ModelTask.Models.Task> TasksList;
+        private readonly Task.Repositories.TaskRepositorie taskRepositorie;
 
-        public TaskController(string taskName, int projectID)
+        public TaskController(Task.Repositories.TaskRepositorie taskRepositorie, ModelTask.Models.Task task)
         {
-            this.task = new ModelTask.Models.Task(taskName, projectID);
-            if(this.taskList == null)
-            {
-                this.taskList = new List<ModelTask.Models.Task> { task };
-            } else
-            {
-                this.taskList.Add(task);
-            }
+            this.tasks = new ModelTask.Models.Task();
+            this.taskRepositorie = taskRepositorie;
+            this.AddTask(task);
         }
 
-        [HttpDelete("{taskID}")]
-        public void RemoveTask(int taskID)
+        [HttpPost]
+        public async Task<ActionResult<ModelTask.Models.Task>> AddTask(
+            [FromBody] ModelTask.Models.Task task)
         {
-            if(!this.IsTaskListEmpty())
-            {
-                foreach(ModelTask.Models.Task task1 in this.taskList)
-                {
-                    if(taskID == task1.GetTaskID())
-                    {
-                        try
-                        {
-                            this.taskList.Remove(task1);
-                        } catch(Exception e)
-                        {
-                            throw new Exception(e + "Erro");
-                        }
-                    }
-                }
-            } else
-            {
-                throw new Exception("Erro: tarefa n�o encontrada");
-            }
+            List<ModelTask.Models.Task> auxTask = this.TasksList;
+            await this.taskRepositorie.AddTask(task);
+
+            return Ok(task);
         }
 
         [HttpPut("{taskID}")]
-        public void UpdateTask(int taskID)
+        public async Task<ActionResult<ModelTask.Models.Task>> UpdateTask(ModelTask.Models.Task task)
         {
-            if(!this.IsTaskListEmpty())
-            {
-                foreach(ModelTask.Models.Task task1 in this.taskList)
-                {
-                    if(taskID == task1.GetTaskID())
-                    {
-                        this.taskList[taskID] = task1;
-                    }
-                }
-            }
+            ModelTask.Models.Task task1 = await this.taskRepositorie.UpdateTask(task, task.taskID);
+            return Ok(task1);
         }
 
         [HttpGet]
-        public List<ModelTask.Models.Task> ViewTask() { return this.taskList; }
-
-        private bool IsTaskListEmpty()
+        public async Task<ActionResult<List<ModelTask.Models.Task>>> ViewAllTasks()
         {
-            if(this.taskList == null)
+            List<ModelTask.Models.Task> tasks = await this.taskRepositorie.SearchAllTasks();
+            return Ok(tasks);
+        }
+
+        [HttpGet("{taskID}")]
+        public async Task<ActionResult<List<ModelTask.Models.Task>>> GetTaskByID(int id)
+        {
+            ModelTask.Models.Task taskByID = await this.taskRepositorie.SearchByID(id);
+            return Ok(taskByID);
+        }
+
+        [HttpDelete("{projectID}")]
+        public async Task<ActionResult<ModelTask.Models.Task>> RemoveTask(ModelTask.Models.Task task)
+        {
+            ModelTask.Models.Task taskDeleted = await this.taskRepositorie
+                .RemoveTask(task, task.taskID);
+            return Ok(taskDeleted);
+        }
+
+        private bool IsProjectsListEmpty()
+        {
+            if (this.TasksList == null)
             {
                 return true;
-            } else
+            }
+            else
             {
                 return false;
             }
