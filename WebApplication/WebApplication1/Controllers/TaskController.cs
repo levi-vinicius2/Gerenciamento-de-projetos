@@ -7,25 +7,19 @@ namespace Task.Controllers
     [Route("api/[controller]")]
     public class TaskController : ControllerBase
     {
-        private readonly ModelTask.Models.Task tasks;
-        private List<ModelTask.Models.Task> TasksList;
         private readonly Task.Repositories.TaskRepositorie taskRepositorie;
 
         public TaskController(Task.Repositories.TaskRepositorie taskRepositorie, ModelTask.Models.Task task)
         {
-            this.tasks = new ModelTask.Models.Task();
             this.taskRepositorie = taskRepositorie;
-            this.AddTask(task);
         }
 
         [HttpPost]
         public async Task<ActionResult<ModelTask.Models.Task>> AddTask(
             [FromBody] ModelTask.Models.Task task)
         {
-            List<ModelTask.Models.Task> auxTask = this.TasksList;
-            await this.taskRepositorie.AddTask(task);
-
-            return Ok(task);
+            ModelTask.Models.Task task1 = await this.taskRepositorie.AddTask(task);
+            return Ok(task1);
         }
 
         [HttpPut("{taskID}")]
@@ -55,18 +49,6 @@ namespace Task.Controllers
             ModelTask.Models.Task taskDeleted = await this.taskRepositorie
                 .RemoveTask(task, task.taskID);
             return Ok(taskDeleted);
-        }
-
-        private bool IsProjectsListEmpty()
-        {
-            if (this.TasksList == null)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
         }
     }
 }

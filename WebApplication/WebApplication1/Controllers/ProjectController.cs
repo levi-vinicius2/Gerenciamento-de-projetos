@@ -13,9 +13,7 @@ namespace Project.Controllers
 
         public ProjectController(Project.Repositories.ProjectRepositorie projectRepositorie, ModelProject.Models.Project project)
         {
-            this.project = project;
             this.projectRepositorie = projectRepositorie;
-            this.AddProject(this.project);
         }
 
         [HttpPost]
@@ -53,18 +51,6 @@ namespace Project.Controllers
             ModelProject.Models.Project projectDelete = await this.projectRepositorie
                 .Delete(project, project.projectID);
             return Ok(projectDelete);
-        }
-
-        private bool IsProjectsListEmpty()
-        {
-            if (this.projectsList == null)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
         }
     }
 }

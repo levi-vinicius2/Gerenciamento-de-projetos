@@ -1,7 +1,6 @@
-using Microsoft.EntityFrameworkCore;
-using User.Controllers;
 
-namespace ModelUser.Models
+
+namespace ModelUser
 {
     public class User
     {

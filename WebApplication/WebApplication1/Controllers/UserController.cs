@@ -1,68 +1,53 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
-using ModelUser.Models;
+using ModelUser;
 
-namespace User.Controllers
+namespace UserC.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
     public class UserController : ControllerBase
     {
-        private ModelUser.Models.User user;
-        private List<ModelUser.Models.User> usersList;
         private User.Repositories.UserRepositorie userRepositorie;
 
-        public UserController(ModelUser.Models.User user, User.Repositories.UserRepositorie userR)
+        public UserController(User.Repositories.UserRepositorie userR)
         {
             this.userRepositorie = userR;
-            this.AddUser(user);
         }
 
         [HttpPost]
-        public async Task<ActionResult<ModelUser.Models.User>> AddUser([FromBody]ModelUser.Models.User user)
+        public async Task<ActionResult<ModelUser.User>> AddUser([FromBody]ModelUser.User user)
         {
-            ModelUser.Models.User user1 = await this.userRepositorie.Add(user);
+            ModelUser.User user1 = await this.userRepositorie.Add(user);
             return Ok(user1);
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<ModelUser.Models.User>>> GetAllUsers()
+        public async Task<ActionResult<List<ModelUser.User>>> GetAllUsers()
         {
-            List<ModelUser.Models.User> users = await this.userRepositorie.SearchAllUsers();
+            List<ModelUser.User> users = await this.userRepositorie.SearchAllUsers();
             return Ok(users);
         }
 
         [HttpGet("{userID}")]
-        public async Task<ActionResult<List<ModelUser.Models.User>>> GetUserByID(int id)
+        public async Task<ActionResult<List<ModelUser.User>>> GetUserByID(int id)
         {
-            ModelUser.Models.User users = await this.userRepositorie.SearchByID(id);
+            ModelUser.User users = await this.userRepositorie.SearchByID(id);
             return Ok(users);
         }
 
         [HttpPut("{userID}")]
-        public async Task<ActionResult<ModelUser.Models.User>> UpdateUser(ModelUser.Models.User user)
+        public async Task<ActionResult<ModelUser.User>> UpdateUser(ModelUser.User user)
         {
-            ModelUser.Models.User user1 = await this.userRepositorie.Update(user);
+            ModelUser.User user1 = await this.userRepositorie.Update(user);
             return Ok(user1);
         }
 
         [HttpDelete("{userID}")]
-        public async Task<ActionResult<ModelUser.Models.User>> RemoveUser(ModelUser.Models.User user)
+        public async Task<ActionResult<ModelUser.User>> RemoveUser(ModelUser.User user)
         {
-            ModelUser.Models.User user1 = await this.userRepositorie.Delete(user);
+            ModelUser.User user1 = await this.userRepositorie.Delete(user);
             return Ok(user1);
-        }
-
-        // if tretur
-        private bool IsUsersListEmpty()
-        {
-            if(this.usersList == null)
-            {
-                return true;
-            } else
-            {
-                return false;
-            }
         }
 
     }

@@ -2,9 +2,11 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Project.Repositories
 {
+    [Table("Project")]
     public class ProjectRepositorie
     {
         private readonly ProjectManeger? programDBContext;
@@ -12,14 +14,14 @@ namespace Project.Repositories
         public ProjectRepositorie(ProjectManeger? programDBContext) { this.programDBContext = programDBContext; }
 
         public async Task<ModelProject.Models.Project> SearchByID(int id)
-        { return await this.programDBContext.ProjectDBContext.FirstOrDefaultAsync(x => x.projectID == id); }
+        { return await this.programDBContext.ProjectDbContext.FirstOrDefaultAsync(x => x.projectID == id); }
 
         public async Task<List<ModelProject.Models.Project>> SearchAllProjects()
-        { return await this.programDBContext.ProjectDBContext.ToListAsync(); }
+        { return await this.programDBContext.ProjectDbContext.ToListAsync(); }
 
         public async Task<ModelProject.Models.Project> Add(ModelProject.Models.Project Project)
         {
-            await this.programDBContext.ProjectDBContext.AddAsync(Project);
+            await this.programDBContext.ProjectDbContext.AddAsync(Project);
             programDBContext.SaveChanges();
             return Project;
         }
@@ -32,7 +34,7 @@ namespace Project.Repositories
                 throw new Exception("ID nao encontrado no banco de dados para atualizar o usuario");
             }
 
-            this.programDBContext.ProjectDBContext.Update(ProjectByID);
+            this.programDBContext.ProjectDbContext.Update(ProjectByID);
             this.programDBContext.SaveChanges();
 
             return ProjectByID;
@@ -46,7 +48,7 @@ namespace Project.Repositories
                 throw new Exception("ID nao encontrado no banco de dados para realizar a exclusao de usuario");
             }
 
-            this.programDBContext.ProjectDBContext.Remove(ProjectByID);
+            this.programDBContext.ProjectDbContext.Remove(ProjectByID);
             this.programDBContext.SaveChanges();
 
             return ProjectByID;

@@ -11,7 +11,6 @@ namespace TaskMap.Map
             builder.Property(x => x.taskName).IsRequired().HasMaxLength(255);
             builder.Property(x => x.observation).HasMaxLength(255);
             builder.Property(x => x.responsableUserID).HasMaxLength(255);
-            builder.Property(x => x.startDate).IsRequired().HasMaxLength(255);
         }
     }
 }
